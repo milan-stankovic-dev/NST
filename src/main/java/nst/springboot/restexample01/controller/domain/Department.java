@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package nst.springboot.restexample01.controller.domain;
 
 import jakarta.persistence.*;
@@ -12,25 +8,27 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
-/**
- *
- * @author student2
- */
 @Entity
 @Table(name = "tbl_department")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Department implements Serializable {
+public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Ime je obavezno polje")
-    @Size(min = 2, max = 10, message = "Broj znakova je od 2 do 10")
+    @NotEmpty(message = "Department name is obligatory.")
+    @Size(min = 2, max = 10, message = "Department name must be from 2 to 10 characters" +
+            " long.")
     @Column(name = "name")
     private String name;
+
+    @NotEmpty(message = "Department short name is obligatory.")
+    @Size(min = 2, max = 5, message = "Department short name is between 2 and 5 characters " +
+            "long.")
     @Column(name = "short_name")
     private String shortName;
 
@@ -38,8 +36,16 @@ public class Department implements Serializable {
     @JoinColumn(name = "secretary_id")
     private Secretary secretary;
 
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL,
+    orphanRemoval = true)
+    private List<SecretaryHistory> secretaryHistories;
+
     @ManyToOne
     @JoinColumn(name = "director_id")
     private Director director;
+
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL,
+    orphanRemoval = true)
+    private List<DirectorHistory> directorHistories;
 
 }

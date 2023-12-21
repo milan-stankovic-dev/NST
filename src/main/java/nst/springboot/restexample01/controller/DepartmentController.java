@@ -8,7 +8,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import nst.springboot.restexample01.controller.domain.Department;
 import nst.springboot.restexample01.controller.service.DepartmentService;
-import nst.springboot.restexample01.dto.DepartmentDto;
+import nst.springboot.restexample01.dto.DepartmentDTO;
 import nst.springboot.restexample01.exception.DepartmentAlreadyExistException;
 import nst.springboot.restexample01.exception.MyErrorDetails;
 import org.springframework.http.HttpStatus;
@@ -41,23 +41,23 @@ public class DepartmentController {
 
     //dodaj novi department
     @PostMapping
-    public ResponseEntity<DepartmentDto> save(@Valid @RequestBody DepartmentDto departmentDto) throws Exception {
+    public ResponseEntity<DepartmentDTO> save(@Valid @RequestBody DepartmentDTO departmentDto) throws Exception {
         //ResponseEntity
-        DepartmentDto deptDto = departmentService.save(departmentDto);
+        DepartmentDTO deptDto = departmentService.save(departmentDto);
         return new ResponseEntity<>(deptDto, HttpStatus.CREATED);
     }
 
    
     @GetMapping
-    public ResponseEntity<List<DepartmentDto>> getAll() {
-        List<DepartmentDto> departments = departmentService.getAll();
+    public ResponseEntity<List<DepartmentDTO>> getAll() {
+        List<DepartmentDTO> departments = departmentService.getAll();
         return new ResponseEntity<>(departments, HttpStatus.OK);
     }
 
        //pronadji na osnovu ID/a
     //localhost:8080/department/1
     @GetMapping("/{id}")
-    public DepartmentDto findById(@PathVariable("id") Long id) throws Exception {
+    public DepartmentDTO findById(@PathVariable("id") Long id) throws Exception {
         System.out.println("Controller: " + id);
         return departmentService.findById(id);
     }

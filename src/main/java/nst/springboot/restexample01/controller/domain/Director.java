@@ -44,4 +44,8 @@ public class Director {
     @JoinColumn(name = "director_history_id")
     private DirectorHistory directorHistory;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "department_id")
+    private Department department;
+
 }

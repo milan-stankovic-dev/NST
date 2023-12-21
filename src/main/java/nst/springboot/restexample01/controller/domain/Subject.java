@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package nst.springboot.restexample01.controller.domain;
 
 import jakarta.persistence.Column;
@@ -20,29 +16,26 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-/**
- *
- * @author Dules
- */
 @Entity
 @Table(name = "tbl_subject")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Subject implements Serializable {
+public class Subject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Ime je obavezno polje")
-    @Size(min = 2, max = 10, message = "Broj znakova je od 2 do 10")
+    @NotEmpty(message = "Subject name is required")
+    @Size(min = 2, max = 10, message = "Subject name must be from 2 to 10 " +
+            "characters long.")
     @Column(name = "name")
     private String name;
 
     private int espb;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
     

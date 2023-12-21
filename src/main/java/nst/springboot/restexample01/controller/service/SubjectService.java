@@ -5,16 +5,17 @@
 package nst.springboot.restexample01.controller.service;
 
 import java.util.List;
-import nst.springboot.restexample01.dto.SubjectDto;
+
+import nst.springboot.restexample01.dto.SubjectDTO;
 
 /**
  *
  * @author student2
  */
 public interface SubjectService {
-    SubjectDto save(SubjectDto subjectDto)throws Exception;
-    List<SubjectDto> getAll();
+    SubjectDTO save(SubjectDTO subjectDto)throws Exception;
+    List<SubjectDTO> getAll();
     void delete(Long id) throws Exception;
-    void update(SubjectDto subjectDto)throws Exception;
-    SubjectDto findById(Long id)throws Exception;
+    void update(SubjectDTO subjectDto)throws Exception;
+    SubjectDTO findById(Long id)throws Exception;
 }

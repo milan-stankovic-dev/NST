@@ -7,6 +7,8 @@ package nst.springboot.restexample01.controller.service.impl;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import lombok.RequiredArgsConstructor;
 import nst.springboot.restexample01.controller.domain.Department;
 import nst.springboot.restexample01.controller.domain.Subject;
 import nst.springboot.restexample01.controller.repository.DepartmentRepository;
@@ -14,7 +16,7 @@ import nst.springboot.restexample01.controller.repository.SubjectRepository;
 import nst.springboot.restexample01.controller.service.SubjectService;
 import nst.springboot.restexample01.converter.impl.DepartmentConverter;
 import nst.springboot.restexample01.converter.impl.SubjectConverter;
-import nst.springboot.restexample01.dto.SubjectDto;
+import nst.springboot.restexample01.dto.SubjectDTO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,31 +24,22 @@ import org.springframework.stereotype.Service;
  * @author student2
  */
 @Service
+@RequiredArgsConstructor
 public class SubjectServiceImpl implements SubjectService {
 
-    private DepartmentConverter departmentConverter;
-    private SubjectConverter subjectConverter;
+    private final DepartmentConverter departmentConverter;
+    private final SubjectConverter subjectConverter;
 
-    private SubjectRepository subjectRepository;
-    private DepartmentRepository departmentRepository;
-
-    public SubjectServiceImpl(
-            SubjectRepository subjectRepository,
-            DepartmentRepository departmentRepository,
-            DepartmentConverter departmentConverter, SubjectConverter subjectConverter) {
-        this.departmentRepository = departmentRepository;
-        this.subjectRepository = subjectRepository;
-        this.departmentConverter = departmentConverter;
-        this.subjectConverter = subjectConverter;
-    }
+    private final SubjectRepository subjectRepository;
+    private final DepartmentRepository departmentRepository;
 
     @Override
-    public SubjectDto save(SubjectDto subjectDto) throws Exception {
+    public SubjectDTO save(SubjectDTO subjectDto) throws Exception {
           throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public List<SubjectDto> getAll() {
+    public List<SubjectDTO> getAll() {
         return subjectRepository
                 .findAll()
                 .stream().map(entity -> subjectConverter.toDto(entity))
@@ -66,12 +59,12 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public void update(SubjectDto subjectDto) throws Exception {
+    public void update(SubjectDTO subjectDto) throws Exception {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public SubjectDto findById(Long id) throws Exception {
+    public SubjectDTO findById(Long id) throws Exception {
         Optional<Subject> subject = subjectRepository.findById(id);
         if (subject.isPresent()) {
             //postoji

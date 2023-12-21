@@ -1,5 +1,6 @@
 package nst.springboot.restexample01.controller.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,7 @@ public class AcademicTitleHistory {
 
     @ManyToOne
     @JoinColumn(name = "member_id")
+    @JsonIgnore
     private Member member;
 
     @OneToOne(cascade = CascadeType.ALL)

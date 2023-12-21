@@ -5,15 +5,16 @@
 package nst.springboot.restexample01.controller.service;
 
 import java.util.List;
-import nst.springboot.restexample01.dto.DepartmentDto;
+
+import nst.springboot.restexample01.dto.DepartmentDTO;
 /**
  *
  * @author student2
  */
 public interface DepartmentService {
-    DepartmentDto save(DepartmentDto departmentDto) throws Exception;
-    List<DepartmentDto> getAll();
+    DepartmentDTO save(DepartmentDTO departmentDto) throws Exception;
+    List<DepartmentDTO> getAll();
     void delete(Long id) throws Exception;
-    void update(DepartmentDto department) throws Exception;
-    DepartmentDto findById(Long id) throws Exception;
+    void update(DepartmentDTO department) throws Exception;
+    DepartmentDTO findById(Long id) throws Exception;
 }

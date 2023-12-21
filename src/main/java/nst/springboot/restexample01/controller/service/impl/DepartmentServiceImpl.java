@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package nst.springboot.restexample01.controller.service.impl;
 
 import java.util.List;
@@ -11,7 +7,7 @@ import nst.springboot.restexample01.controller.domain.Department;
 import nst.springboot.restexample01.controller.repository.DepartmentRepository;
 import nst.springboot.restexample01.controller.service.DepartmentService;
 import nst.springboot.restexample01.converter.impl.DepartmentConverter;
-import nst.springboot.restexample01.dto.DepartmentDto;
+import nst.springboot.restexample01.dto.DepartmentDTO;
 import nst.springboot.restexample01.exception.DepartmentAlreadyExistException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -34,8 +30,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public DepartmentDto save(DepartmentDto departmentDto) throws Exception {
-        Optional<Department> dept = departmentRepository.findByName(departmentDto.getName());
+    public DepartmentDTO save(DepartmentDTO departmentDto) throws Exception {
+        Optional<Department> dept = departmentRepository.findByName(departmentDto.name());
         if (dept.isPresent()) {
             throw new DepartmentAlreadyExistException("Department sa tim imenom postoji!");
         } else {
@@ -62,12 +58,12 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public void update(DepartmentDto department) throws Exception {
+    public void update(DepartmentDTO department) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public DepartmentDto findById(Long id) throws Exception {
+    public DepartmentDTO findById(Long id) throws Exception {
         Optional<Department> dept = departmentRepository.findById(id);
         if (dept.isPresent()) {
             //postoji
@@ -79,7 +75,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public List<DepartmentDto> getAll() {
+    public List<DepartmentDTO> getAll() {
         return departmentRepository
                 .findAll()
                 .stream().map(entity -> departmentConverter.toDto(entity))

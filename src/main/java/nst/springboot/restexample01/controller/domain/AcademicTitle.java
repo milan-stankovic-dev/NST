@@ -22,6 +22,6 @@ public class AcademicTitle {
     @Column(name = "title_name")
     private String titleName;
 
-    @OneToOne(mappedBy = "educationTitle")
+    @OneToOne(mappedBy = "academicTitle")
     private AcademicTitleHistory academicTitleHistory;
 }

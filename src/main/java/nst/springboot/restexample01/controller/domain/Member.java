@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "tbl_member")
 @Data
@@ -16,12 +18,14 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotEmpty(message = "Member's first name must be " +
             "inputted.")
     @Size(min = 2, max = 25, message = "Member's name must" +
             "be between 2 and 25 characters.")
     @Column(name = "first_name")
     private String firstName;
+
     @NotEmpty(message = "Member's last name must be " +
             "inputted.")
     @Size(min = 2, max = 25, message =  "Members' last name " +
@@ -40,4 +44,8 @@ public class Member {
     @ManyToOne
     @JoinColumn(name = "scientific_title_id")
     private ScientificField scientificField;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL,
+    orphanRemoval = true)
+    private List<AcademicTitleHistory> histories;
 }

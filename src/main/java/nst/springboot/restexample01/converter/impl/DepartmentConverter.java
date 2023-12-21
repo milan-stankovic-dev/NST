@@ -6,7 +6,7 @@ package nst.springboot.restexample01.converter.impl;
 
 import nst.springboot.restexample01.controller.domain.Department;
 import nst.springboot.restexample01.converter.DtoEntityConverter;
-import nst.springboot.restexample01.dto.DepartmentDto;
+import nst.springboot.restexample01.dto.DepartmentDTO;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,24 +15,31 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class DepartmentConverter implements DtoEntityConverter<DepartmentDto, Department>{
+public class DepartmentConverter implements DtoEntityConverter<DepartmentDTO, Department>{
 
     @Override
-    public DepartmentDto toDto(Department entity) {
-        return new DepartmentDto(entity.getId(),
+    public DepartmentDTO toDto(Department entity) {
+        return new DepartmentDTO(
+                entity.getId(),
                 entity.getName(),
                 entity.getShortName(),
                 entity.getSecretary(),
-                entity.getDirector());
+                entity.getSecretaryHistories(),
+                entity.getDirector(),
+                entity.getDirectorHistories()
+        );
     }
 
     @Override
-    public Department toEntity(DepartmentDto dto) {
-        return new Department(dto.getId(),
-                dto.getName(),
-                dto.getShortName(),
-                dto.getSecretary(),
-                dto.getDirector());
+    public Department toEntity(DepartmentDTO dto) {
+        return new Department(
+                dto.id(),
+                dto.name(),
+                dto.shortName(),
+                dto.secretary(),
+                dto.secretaryHistories(),
+                dto.director(),
+                dto.directorHistories());
     }
     
 }
