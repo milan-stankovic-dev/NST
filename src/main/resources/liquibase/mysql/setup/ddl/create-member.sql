@@ -4,6 +4,15 @@ create table tbl_member(
     last_name varchar(25) not null,
     academic_title_id bigint unsigned,
     department_id bigint unsigned,
-    education_title bigint unsigned,
-    scientific_title bigint unsigned
+    education_title_id bigint unsigned,
+    scientific_field_id bigint unsigned,
+    primary key (id),
+    constraint academic_title_fk1 FOREIGN KEY
+    (academic_title_id) REFERENCES tbl_academic_title(id),
+    constraint department_fk1 FOREIGN KEY
+    (department_id) REFERENCES tbl_department(id),
+    constraint education_title_fk2 FOREIGN KEY
+    (education_title_id) REFERENCES tbl_education_title(id),
+    constraint scientific_field_fk1 FOREIGN KEY
+    (scientific_field_id) REFERENCES tbl_scientific_field(id)
 )

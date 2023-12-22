@@ -1,9 +1,9 @@
 package nst.springboot.restexample01.dto;
 
-import nst.springboot.restexample01.controller.domain.Director;
-import nst.springboot.restexample01.controller.domain.DirectorHistory;
-import nst.springboot.restexample01.controller.domain.Secretary;
-import nst.springboot.restexample01.controller.domain.SecretaryHistory;
+import nst.springboot.restexample01.domain.Director;
+import nst.springboot.restexample01.domain.DirectorHistory;
+import nst.springboot.restexample01.domain.Secretary;
+import nst.springboot.restexample01.domain.SecretaryHistory;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package nst.springboot.restexample01.controller.domain;
+package nst.springboot.restexample01.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

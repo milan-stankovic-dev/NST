@@ -19,17 +19,53 @@
     <changeSet id="create-academic-title-history" author="milan s.">
         <sqlFile path="ddl/create-academic-title-history.sql" relativeToChangelogFile="true"/>
     </changeSet>
+    <changeSet id="change-academic-title" author="milan s.">
+        <sql>
+            alter table tbl_academic_title
+            add constraint academic_title_history_fk0
+            foreign key (academic_title_history_id)
+            references tbl_academic_title_history(id);
+        </sql>
+    </changeSet>
+    <changeSet id="change-scientific-field" author="milan s.">
+        <sql>
+            alter table tbl_scientific_field
+            add constraint academic_title_history_fk1
+            foreign key (academic_title_history_id)
+            references tbl_academic_title_history(id);
+        </sql>
+    </changeSet>
     <!--   &lt;!&ndash; kreiraj tabelu director&ndash;&gt;-->
     <changeSet id="create-director" author="milan s.">
         <sqlFile path="ddl/create-director.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    <!--   &lt;!&ndash; kreiraj tabelu director&ndash;&gt;-->
+    <changeSet id="create-secretary" author="milan s.">
+        <sqlFile path="ddl/create-secretary.sql" relativeToChangelogFile="true"/>
     </changeSet>
     <!--   &lt;!&ndash; kreiraj tabelu secretary history&ndash;&gt;-->
     <changeSet id="create-secretary-history" author="milan s.">
         <sqlFile path="ddl/create-secretary-history.sql" relativeToChangelogFile="true"/>
     </changeSet>
+    <changeSet id="alter-secretary" author="milan s.">
+        <sql>
+            alter table tbl_secretary
+            add constraint secretary_history_fk
+            foreign key (secretary_history_id)
+            references tbl_secretary_history(id);
+        </sql>
+    </changeSet>
     <!--   &lt;!&ndash; kreiraj tabelu director history&ndash;&gt;-->
     <changeSet id="create-director-history" author="milan s.">
         <sqlFile path="ddl/create-director-history.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    <changeSet id="alter-director" author="milan s.">
+<!--        <sql>-->
+<!--            alter table tbl_director-->
+<!--            add constraint director_fk-->
+<!--            foreign key (director_history_id)-->
+<!--            references tbl_director(id);-->
+<!--        </sql>-->
     </changeSet>
     <!--   &lt;!&ndash; kreiraj tabelu department&ndash;&gt;-->
     <changeSet id="create-department" author="milan s.">

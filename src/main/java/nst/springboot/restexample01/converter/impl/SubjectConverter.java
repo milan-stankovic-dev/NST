@@ -1,10 +1,9 @@
 package nst.springboot.restexample01.converter.impl;
 
 import lombok.RequiredArgsConstructor;
-import nst.springboot.restexample01.controller.domain.Subject;
+import nst.springboot.restexample01.domain.Subject;
 import nst.springboot.restexample01.converter.DtoEntityConverter;
 import nst.springboot.restexample01.dto.SubjectDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component

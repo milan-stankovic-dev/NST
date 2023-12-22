@@ -2,7 +2,9 @@ package nst.springboot.restexample01.controller;
 
 import jakarta.validation.Valid;
 import java.util.List;
-import nst.springboot.restexample01.controller.service.SubjectService;
+
+import lombok.RequiredArgsConstructor;
+import nst.springboot.restexample01.service.SubjectService;
 import nst.springboot.restexample01.dto.SubjectDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,19 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- *
- * @author student2
- */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/subject")
 public class SubjectController {
 
     private final SubjectService subjectService;
-
-    public SubjectController(SubjectService subjectService) {
-        this.subjectService = subjectService;
-    }
 
     //dodaj novi department
     @PostMapping
@@ -75,6 +70,4 @@ public class SubjectController {
         return new ResponseEntity<>("Department removed!", HttpStatus.OK);
 
     }
-    
-    
 }

@@ -6,8 +6,10 @@ package nst.springboot.restexample01.controller;
 
 import jakarta.validation.Valid;
 import java.util.List;
-import nst.springboot.restexample01.controller.domain.Department;
-import nst.springboot.restexample01.controller.service.DepartmentService;
+
+import lombok.RequiredArgsConstructor;
+import nst.springboot.restexample01.domain.Department;
+import nst.springboot.restexample01.service.DepartmentService;
 import nst.springboot.restexample01.dto.DepartmentDTO;
 import nst.springboot.restexample01.exception.DepartmentAlreadyExistException;
 import nst.springboot.restexample01.exception.MyErrorDetails;
@@ -23,21 +25,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- *
- * @author student2
- */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/department")
 public class DepartmentController {
 
-    private DepartmentService departmentService;
-
-    public DepartmentController(DepartmentService departmentService) {
-        this.departmentService = departmentService;
-        System.out.println("nst.springboot.restexample01.controller.DepartmentController.<init>()");
-        System.out.println("kreiran je konroller!");
-    }
+    private final DepartmentService departmentService;
 
     //dodaj novi department
     @PostMapping

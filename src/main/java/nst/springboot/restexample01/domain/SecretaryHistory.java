@@ -1,4 +1,4 @@
-package nst.springboot.restexample01.controller.domain;
+package nst.springboot.restexample01.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,4 +17,8 @@ public class SecretaryHistory {
 
     @OneToOne(mappedBy = "secretaryHistory")
     private Secretary secretary;
+
+    @ManyToOne
+    @JoinColumn
+    private Department department;
 }

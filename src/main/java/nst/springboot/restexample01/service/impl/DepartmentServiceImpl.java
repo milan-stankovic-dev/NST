@@ -1,15 +1,14 @@
-package nst.springboot.restexample01.controller.service.impl;
+package nst.springboot.restexample01.service.impl;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import nst.springboot.restexample01.controller.domain.Department;
-import nst.springboot.restexample01.controller.repository.DepartmentRepository;
-import nst.springboot.restexample01.controller.service.DepartmentService;
+import nst.springboot.restexample01.domain.Department;
+import nst.springboot.restexample01.repository.DepartmentRepository;
+import nst.springboot.restexample01.service.DepartmentService;
 import nst.springboot.restexample01.converter.impl.DepartmentConverter;
 import nst.springboot.restexample01.dto.DepartmentDTO;
 import nst.springboot.restexample01.exception.DepartmentAlreadyExistException;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**

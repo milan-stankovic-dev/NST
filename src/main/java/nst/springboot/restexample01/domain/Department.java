@@ -1,4 +1,4 @@
-package nst.springboot.restexample01.controller.domain;
+package nst.springboot.restexample01.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.util.List;
 
 @Entity

@@ -4,5 +4,6 @@ create table tbl_secretary(
     last_name varchar(25) not null,
     start_date datetime,
     end_date datetime,
-    secretary_history_id bigint unsigned
+    secretary_history_id bigint unsigned,
+    primary key (id)
 )

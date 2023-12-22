@@ -5,5 +5,6 @@ create table tbl_director(
     start_date datetime,
     end_date datetime,
     department_id bigint unsigned,
-    director_history_id bigint unsigned
+    director_history_id bigint unsigned,
+    primary key (id)
 )

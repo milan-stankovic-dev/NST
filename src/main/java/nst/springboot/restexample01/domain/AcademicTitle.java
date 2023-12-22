@@ -1,4 +1,4 @@
-package nst.springboot.restexample01.controller.domain;
+package nst.springboot.restexample01.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -8,21 +8,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "tbl_scientific_field")
+@Table(name = "academic_title")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ScientificField {
+public class AcademicTitle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @NotBlank
-    @Size(min = 2, max = 30, message = "Field name must be between 2 and 30" +
+    @Size(min = 2, max = 30, message = "Title name must be between 2 and 30" +
             "characters.")
-    @Column(name = "field_name")
-    private String fieldName;
+    @Column(name = "title_name")
+    private String titleName;
 
-    @OneToOne(mappedBy = "scientificField")
+    @OneToOne(mappedBy = "academicTitle")
     private AcademicTitleHistory academicTitleHistory;
 }
