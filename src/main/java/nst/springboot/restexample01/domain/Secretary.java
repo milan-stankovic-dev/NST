@@ -18,6 +18,11 @@ public class Secretary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "start_date")
+    @NotNull
+    @PastOrPresent
+    private Instant startDate;
+
     @NotEmpty(message = "Secretary's name must be inputted.")
     @Size(min = 2, max = 25, message = "First name must be from 2 to " +
             "25 characters.")
@@ -28,16 +33,6 @@ public class Secretary {
     @Size(min = 2, max = 25, message = "Last name must be from 2 to " +
             "25 characters.")
     private String lastName;
-
-    @Column(name = "start_date")
-    @NotNull
-    @PastOrPresent
-    private Instant startDate;
-
-    @Column(name = "end_date")
-    @NotNull
-    @Future
-    private Instant endDate;
 
     @OneToOne(cascade =  CascadeType.ALL)
     @JoinColumn(name = "department_id")

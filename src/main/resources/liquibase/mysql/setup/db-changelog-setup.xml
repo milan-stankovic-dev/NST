@@ -55,10 +55,34 @@
     <changeSet id="create-academic-title-history" author="milan s.">
         <sqlFile path="ddl/create-academic-title-history.sql" relativeToChangelogFile="true"/>
     </changeSet>
-<!--    -->
-<!--    &lt;!&ndash; popuni tabelu depratment&ndash;&gt;-->
-<!--    <changeSet id="init-department" author="d.savic">-->
-<!--        <sqlFile path="dml/init-department.sql" relativeToChangelogFile="true"/>-->
-<!--    </changeSet>-->
-    
+    <!-- popuni tabelu academic title-->
+    <changeSet id="init-academic-title" author="milan s.">
+        <sqlFile path="dml/init-academic-title.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    <!-- popuni tabelu education title-->
+    <changeSet id="init-education-title" author="milan s.">
+        <sqlFile path="dml/init-education-title.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    <!-- popuni tabelu scientific field-->
+    <changeSet id="init-scientific-field" author="milan s.">
+        <sqlFile path="dml/init-scientific-field.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    <changeSet id="init-department" author="milan s.">
+        <sqlFile path="dml/init-department.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    <changeSet id="init-subject" author="milan s.">
+        <sqlFile path="dml/init-subject.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    <changeSet id="init-member" author="milan s.">
+        <sqlFile path="dml/init-member.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    <changeSet id="init-director" author="milan s.">
+        <sqlFile path="dml/init-director.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    <changeSet id="init-secretary" author="milan s.">
+        <sqlFile path="dml/init-secretary.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    <changeSet id="update-department" author="milan s.">
+        <sqlFile path="dml/update-department.sql" relativeToChangelogFile="true"/>
+    </changeSet>
 </databaseChangeLog>

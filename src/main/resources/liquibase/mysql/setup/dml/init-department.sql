@@ -1,10 +1,5 @@
---insert into tbl_department(name) values ("department-1");
---insert into tbl_department(name) values ("department-2");
---insert into tbl_department(name) values ("department-3");
---insert into tbl_department(name) values ("department-4");
---insert into tbl_department(name) values ("department-5");
---insert into tbl_department(name) values ("department-6");
---insert into tbl_department(name) values ("department-7");
---insert into tbl_department(name) values ("department-8");
---
---
+insert into tbl_department(name, short_name) values ("Department of software engineering", "SILAB");
+insert into tbl_department(name, short_name) values ("Laboratory of multimedia", "MMKLAB");
+insert into tbl_department(name, short_name) values ("Department of information systems", "IS");
+insert into tbl_department(name, short_name) values ("Laboratory of e-business", "ELAB");
+insert into tbl_department(name, short_name) values ("Department of AI", "AI");

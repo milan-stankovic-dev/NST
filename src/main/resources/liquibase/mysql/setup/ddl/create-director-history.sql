@@ -1,5 +1,7 @@
 create table tbl_director_history (
     id bigint unsigned not null AUTO_INCREMENT,
+    start_date datetime,
+    end_date datetime,
     director_id bigint unsigned,
     department_id bigint unsigned,
     primary key (id),
