@@ -32,11 +32,11 @@ public class AcademicTitleHistory {
     @JsonIgnore
     private Member member;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "academic_title_id")
     private AcademicTitle academicTitle;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "scientific_field_id")
     private ScientificField scientificField;
 }

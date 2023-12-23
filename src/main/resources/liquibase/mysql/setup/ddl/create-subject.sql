@@ -4,5 +4,5 @@ create table tbl_subject(
         espb int,
         department_id bigint unsigned,
 	primary key (id),
-        constraint department_fk FOREIGN KEY (department_id) REFERENCES tbl_department(id) 
+        constraint department_fk5 FOREIGN KEY (department_id) REFERENCES tbl_department(id)
 )

@@ -5,6 +5,7 @@ create table tbl_director(
     start_date datetime,
     end_date datetime,
     department_id bigint unsigned,
-    director_history_id bigint unsigned,
-    primary key (id)
+    primary key (id),
+    constraint department_fk1 FOREIGN KEY
+    (department_id) REFERENCES tbl_department(id)
 )

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.util.List;
 
 @Entity
 @Table(name = "tbl_director")
@@ -39,10 +40,6 @@ public class Director {
     @NotNull
     @Future
     private Instant endDate;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "director_history_id")
-    private DirectorHistory directorHistory;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "department_id")

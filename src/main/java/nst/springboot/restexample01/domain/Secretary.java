@@ -39,7 +39,8 @@ public class Secretary {
     @Future
     private Instant endDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "secretary_history_id")
-    private SecretaryHistory secretaryHistory;
+    @OneToOne(cascade =  CascadeType.ALL)
+    @JoinColumn(name = "department_id")
+    private Department department;
+
 }

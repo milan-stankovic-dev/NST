@@ -1,5 +1,6 @@
 package nst.springboot.restexample01.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,10 +16,12 @@ public class SecretaryHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "secretaryHistory")
+    @ManyToOne
+    @JoinColumn(name = "secretary_id")
     private Secretary secretary;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "department_id")
+    @JsonIgnore
     private Department department;
 }

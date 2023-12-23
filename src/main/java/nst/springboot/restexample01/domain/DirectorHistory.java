@@ -21,6 +21,7 @@ public class DirectorHistory {
     @JsonIgnore
     private Department department;
 
-    @OneToOne(mappedBy = "directorHistory")
+    @ManyToOne
+    @JoinColumn(name = "director_id")
     private Director director;
 }

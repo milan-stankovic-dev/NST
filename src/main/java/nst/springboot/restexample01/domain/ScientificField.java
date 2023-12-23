@@ -23,6 +23,4 @@ public class ScientificField {
     @Column(name = "field_name")
     private String fieldName;
 
-    @OneToOne(mappedBy = "scientificField")
-    private AcademicTitleHistory academicTitleHistory;
 }
