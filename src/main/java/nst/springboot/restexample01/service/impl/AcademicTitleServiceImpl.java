@@ -5,9 +5,10 @@ import nst.springboot.restexample01.converter.impl.AcademicTitleConverter;
 import nst.springboot.restexample01.domain.AcademicTitle;
 import nst.springboot.restexample01.dto.AcademicTitleDTO;
 import nst.springboot.restexample01.repository.AcademicTitleRepository;
-import nst.springboot.restexample01.service.AcademicTitleService;
+import nst.springboot.restexample01.service.abstraction.AcademicTitleService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +26,11 @@ public class AcademicTitleServiceImpl implements AcademicTitleService {
     }
 
     @Override
+    public List<AcademicTitleDTO> getAll() {
+        return null;
+    }
+
+    @Override
     public void delete(Long id) throws Exception {
         if(id == null){
             throw new Exception("You must input an id to delete.");
@@ -37,5 +43,15 @@ public class AcademicTitleServiceImpl implements AcademicTitleService {
         }
 
         academicTitleRepository.deleteById(id);
+    }
+
+    @Override
+    public AcademicTitleDTO update(AcademicTitleDTO e) throws Exception {
+        return null;
+    }
+
+    @Override
+    public AcademicTitleDTO findById(Long aLong) throws Exception {
+        return null;
     }
 }

@@ -2,9 +2,8 @@ package nst.springboot.restexample01.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import nst.springboot.restexample01.domain.EducationTitle;
 import nst.springboot.restexample01.dto.EducationTitleDTO;
-import nst.springboot.restexample01.service.EducationTitleService;
+import nst.springboot.restexample01.service.abstraction.EducationTitleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

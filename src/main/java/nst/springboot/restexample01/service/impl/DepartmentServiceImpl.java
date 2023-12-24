@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import nst.springboot.restexample01.domain.Department;
 import nst.springboot.restexample01.repository.DepartmentRepository;
-import nst.springboot.restexample01.service.DepartmentService;
+import nst.springboot.restexample01.service.abstraction.DepartmentService;
 import nst.springboot.restexample01.converter.impl.DepartmentConverter;
 import nst.springboot.restexample01.dto.DepartmentDTO;
 import nst.springboot.restexample01.exception.DepartmentAlreadyExistException;
@@ -49,7 +49,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public void update(DepartmentDTO department) throws Exception {
+    public DepartmentDTO update(DepartmentDTO department) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

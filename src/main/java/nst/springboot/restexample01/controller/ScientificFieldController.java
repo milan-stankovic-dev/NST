@@ -3,8 +3,7 @@ package nst.springboot.restexample01.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import nst.springboot.restexample01.dto.ScientificFieldDTO;
-import nst.springboot.restexample01.repository.ScientificFieldRepository;
-import nst.springboot.restexample01.service.ScientificFieldService;
+import nst.springboot.restexample01.service.abstraction.ScientificFieldService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

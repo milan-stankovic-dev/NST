@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
-import nst.springboot.restexample01.service.SubjectService;
+import nst.springboot.restexample01.service.abstraction.SubjectService;
 import nst.springboot.restexample01.dto.SubjectDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

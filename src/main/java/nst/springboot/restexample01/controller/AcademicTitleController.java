@@ -3,7 +3,7 @@ package nst.springboot.restexample01.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import nst.springboot.restexample01.dto.AcademicTitleDTO;
-import nst.springboot.restexample01.service.AcademicTitleService;
+import nst.springboot.restexample01.service.abstraction.AcademicTitleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
