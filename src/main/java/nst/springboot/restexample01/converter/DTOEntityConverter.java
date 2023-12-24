@@ -8,7 +8,7 @@ package nst.springboot.restexample01.converter;
  *
  * @author student2
  */
-public interface DtoEntityConverter<T, E> {
-    T toDto(E e);
-    E toEntity(T t);
+public interface DTOEntityConverter<DTO, ENTITY> {
+    DTO toDto(ENTITY e);
+    ENTITY toEntity(DTO t);
 }

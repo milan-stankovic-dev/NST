@@ -3,6 +3,8 @@ package nst.springboot.restexample01.service.impl;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import lombok.RequiredArgsConstructor;
 import nst.springboot.restexample01.domain.Department;
 import nst.springboot.restexample01.repository.DepartmentRepository;
 import nst.springboot.restexample01.service.DepartmentService;
@@ -11,22 +13,12 @@ import nst.springboot.restexample01.dto.DepartmentDTO;
 import nst.springboot.restexample01.exception.DepartmentAlreadyExistException;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author student2
- */
 @Service
+@RequiredArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
 
-    private DepartmentConverter departmentConverter;
-    private DepartmentRepository departmentRepository;
-
-    public DepartmentServiceImpl(
-            DepartmentRepository departmentRepository,
-            DepartmentConverter departmentConverter) {
-        this.departmentRepository = departmentRepository;
-        this.departmentConverter = departmentConverter;
-    }
+    private final DepartmentConverter departmentConverter;
+    private final DepartmentRepository departmentRepository;
 
     @Override
     public DepartmentDTO save(DepartmentDTO departmentDto) throws Exception {

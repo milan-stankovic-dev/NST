@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "academic_title")
+@Table(name = "tbl_academic_title")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,7 +20,7 @@ public class AcademicTitle {
     @NotBlank
     @Size(min = 2, max = 30, message = "Title name must be between 2 and 30" +
             "characters.")
-    @Column(name = "title_name")
+    @Column(name = "name")
     private String titleName;
 
 }

@@ -1,12 +1,12 @@
 package nst.springboot.restexample01.converter.impl;
 
+import nst.springboot.restexample01.converter.DTOEntityConverter;
 import nst.springboot.restexample01.domain.Department;
-import nst.springboot.restexample01.converter.DtoEntityConverter;
 import nst.springboot.restexample01.dto.DepartmentDTO;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DepartmentConverter implements DtoEntityConverter<DepartmentDTO, Department>{
+public class DepartmentConverter implements DTOEntityConverter<DepartmentDTO, Department> {
 
     @Override
     public DepartmentDTO toDto(Department entity) {

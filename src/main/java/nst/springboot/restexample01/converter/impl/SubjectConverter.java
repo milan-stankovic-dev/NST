@@ -1,14 +1,14 @@
 package nst.springboot.restexample01.converter.impl;
 
 import lombok.RequiredArgsConstructor;
+import nst.springboot.restexample01.converter.DTOEntityConverter;
 import nst.springboot.restexample01.domain.Subject;
-import nst.springboot.restexample01.converter.DtoEntityConverter;
 import nst.springboot.restexample01.dto.SubjectDTO;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class SubjectConverter implements DtoEntityConverter<SubjectDTO, Subject>{
+public class SubjectConverter implements DTOEntityConverter<SubjectDTO, Subject> {
     private final DepartmentConverter departmentConverter;
     
     @Override
