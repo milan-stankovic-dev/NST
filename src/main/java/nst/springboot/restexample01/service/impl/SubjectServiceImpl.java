@@ -1,14 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package nst.springboot.restexample01.service.impl;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import nst.springboot.restexample01.domain.Department;
 import nst.springboot.restexample01.domain.Subject;
 import nst.springboot.restexample01.repository.DepartmentRepository;
 import nst.springboot.restexample01.repository.SubjectRepository;
@@ -22,15 +20,35 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SubjectServiceImpl implements SubjectService {
 
-    private final DepartmentConverter departmentConverter;
     private final SubjectConverter subjectConverter;
-
     private final SubjectRepository subjectRepository;
     private final DepartmentRepository departmentRepository;
 
     @Override
+    @Transactional
     public SubjectDTO save(SubjectDTO subjectDto) throws Exception {
-          throw new UnsupportedOperationException("Not supported yet.");
+        final Subject subjectToSave = subjectConverter.toEntity(subjectDto);
+
+        if(subjectToSave.getDepartment() == null){
+            throw new Exception("The subject you are trying to save" +
+                    "must contain a department.");
+        }
+
+        if(subjectToSave.getDepartment().getId() == null){
+            departmentRepository.save(subjectToSave.getDepartment());
+        } else {
+            Optional<Department> departmentOptFromDB =
+                    departmentRepository.findById(subjectToSave
+                            .getDepartment().getId());
+
+            if(departmentOptFromDB.isEmpty()) {
+                departmentRepository.save(subjectToSave.getDepartment());
+            }
+        }
+
+        final Subject savedSubject = subjectRepository.save(subjectToSave);
+
+        return subjectConverter.toDto(savedSubject);
     }
 
     @Override
@@ -38,7 +56,7 @@ public class SubjectServiceImpl implements SubjectService {
         return subjectRepository
                 .findAll()
                 .stream().map(subjectConverter::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

@@ -11,8 +11,8 @@ public record DepartmentDTO(
     Long id,
     String name,
     String shortName,
-    Secretary secretary,
-    List<SecretaryHistory> secretaryHistories,
-    Director director,
-    List<DirectorHistory> directorHistories
+    SecretaryDTO secretaryDTO,
+    List<SecretaryHistoryDTO> secretaryHistories,
+    DirectorDTO directorDTO,
+    List<DirectorHistoryDTO> directorHistories
 ) { }

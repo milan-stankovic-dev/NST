@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 import java.time.Instant;
 
 @Entity
-@Table(name = "director_history")
+@Table(name = "tbl_director_history")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
