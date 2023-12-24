@@ -85,4 +85,13 @@
     <changeSet id="update-department" author="milan s.">
         <sqlFile path="dml/update-department.sql" relativeToChangelogFile="true"/>
     </changeSet>
+    <changeSet id="init-academic-title-history" author="milan s.">
+        <sqlFile path="dml/init-academic-title-history.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    <changeSet id="init-director-history" author="milan s.">
+        <sqlFile path="dml/init-director-history.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    <changeSet id="init-secretary-history" author="milan s.">
+        <sqlFile path="dml/init-secretary-history.sql" relativeToChangelogFile="true"/>
+    </changeSet>
 </databaseChangeLog>
