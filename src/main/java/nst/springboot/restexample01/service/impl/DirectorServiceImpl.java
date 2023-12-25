@@ -4,9 +4,9 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import nst.springboot.restexample01.converter.impl.DirectorConverter;
-import nst.springboot.restexample01.domain.Department;
-import nst.springboot.restexample01.domain.Director;
-import nst.springboot.restexample01.domain.DirectorHistory;
+import nst.springboot.restexample01.domain.impl.Department;
+import nst.springboot.restexample01.domain.impl.Director;
+import nst.springboot.restexample01.domain.impl.DirectorHistory;
 import nst.springboot.restexample01.dto.DirectorDTO;
 import nst.springboot.restexample01.repository.DepartmentRepository;
 import nst.springboot.restexample01.repository.DirectorHistoryRepository;
@@ -14,8 +14,7 @@ import nst.springboot.restexample01.repository.DirectorRepository;
 import nst.springboot.restexample01.service.abstraction.DirectorService;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.time.ZoneId;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +44,10 @@ public class DirectorServiceImpl implements DirectorService {
     private Department fetchDepartmentIfItExists(Long id)
             throws EntityNotFoundException{
 
+        if(id == null){
+            throw new NullPointerException("Id must not be null");
+        }
+
         final Optional<Department> departmentOptFromDB
                 = departmentRepository.findById(id);
 
@@ -55,29 +58,38 @@ public class DirectorServiceImpl implements DirectorService {
         return departmentOptFromDB.get();
     }
 
-    private DirectorDTO saveNewDirectorDifferentScenarios(Department directorChangeDepartment,
+    private DirectorDTO saveNewDirectorDifferentScenarios(
                                                 Director newDirector){
-        final Optional<Director> currentDirectorOpt =
-                directorRepository.findById(
-                        directorChangeDepartment.getDirector().getId());
 
-        if(currentDirectorOpt.isEmpty()){
-            final Director savedDirector = directorRepository.save(newDirector);
-            return directorConverter.toDto(savedDirector);
+        final Department directorChangeDepartment = newDirector.getDepartment();
+
+        if(directorChangeDepartment.getDirector() != null){
+
+            final Optional<Director> currentDirectorOpt = directorRepository.findById
+                    (directorChangeDepartment
+                            .getDirector()
+                            .getId());
+
+//        if(currentDirectorOpt.isEmpty()){
+//            final Director savedDirector = directorRepository.save(newDirector);
+//
+//            return directorConverter.toDto(savedDirector);
+//        }
+
+            final Director currentDirector = currentDirectorOpt.get();
+            moveCurrentDirectorToHistory(currentDirector);
         }
-
-        final Director currentDirector = currentDirectorOpt.get();
-        moveCurrentDirectorToHistory(currentDirector);
-
         final var newDirectorSaved = directorRepository.save(newDirector);
+        final Department updatedDepartment = newDirector.getDepartment();
+        updatedDepartment.getDirector().setId(newDirectorSaved.getId());
+        departmentRepository.save(updatedDepartment);
 
         return directorConverter.toDto(newDirectorSaved);
     }
     private void moveCurrentDirectorToHistory(Director currentDirector) {
 
-        final Instant startDate = currentDirector.getStartDate();
-        final Instant endDate = Instant.from(Instant.now().atZone
-                (ZoneId.systemDefault()).toLocalDate());
+        final LocalDate startDate = currentDirector.getStartDate();
+        final LocalDate endDate = LocalDate.now();
 
         final Department directorChangeDepartment =
                 fetchDepartmentIfItExists(currentDirector.getDepartment().getId());
@@ -89,19 +101,37 @@ public class DirectorServiceImpl implements DirectorService {
         directorHistoryRepository.save(newlyHistoricDirector);
         directorRepository.delete(currentDirector);
     }
+
+    private Director determineDirector(DirectorDTO directorDTO){
+        final Director director = directorConverter.toEntity(directorDTO);
+        final String firstName = director.getFirstName();
+        final String lastName = director.getLastName();
+
+        final Optional<Director> directorDbOpt
+                = directorRepository.findByFirstNameAndLastName(
+                        firstName, lastName);
+
+        if(directorDbOpt.isPresent()){
+            return directorDbOpt.get();
+        }
+        director.setId(null);
+
+        return director;
+    }
     @Transactional
     private DirectorDTO changeDirectorHistoryKept(DirectorDTO directorDTO)
             throws Exception{
 
         validateDepartmentID(directorDTO.departmentId());
         final Director newDirector =
-                directorConverter.toEntity(directorDTO);
+                determineDirector(directorDTO);
 
         final Department directorChangeDepartment =
                 fetchDepartmentIfItExists(directorDTO.departmentId());
 
-        return saveNewDirectorDifferentScenarios(directorChangeDepartment,
-                newDirector);
+        newDirector.setDepartment(directorChangeDepartment);
+
+        return saveNewDirectorDifferentScenarios(newDirector);
 
     }
     @Override

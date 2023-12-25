@@ -3,7 +3,7 @@ package nst.springboot.restexample01.service.impl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import nst.springboot.restexample01.converter.impl.EducationTitleConverter;
-import nst.springboot.restexample01.domain.EducationTitle;
+import nst.springboot.restexample01.domain.impl.EducationTitle;
 import nst.springboot.restexample01.dto.EducationTitleDTO;
 import nst.springboot.restexample01.repository.EducationTitleRepository;
 import nst.springboot.restexample01.service.abstraction.EducationTitleService;

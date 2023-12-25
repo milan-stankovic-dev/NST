@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
-import nst.springboot.restexample01.domain.Department;
+import nst.springboot.restexample01.domain.impl.Department;
 import nst.springboot.restexample01.service.abstraction.DepartmentService;
 import nst.springboot.restexample01.dto.DepartmentDTO;
 import nst.springboot.restexample01.exception.DepartmentAlreadyExistException;

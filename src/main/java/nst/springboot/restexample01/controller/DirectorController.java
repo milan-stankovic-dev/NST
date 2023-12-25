@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/director")
@@ -20,10 +22,14 @@ public class DirectorController {
         return ResponseEntity.ok(savedDirectorDTO);
     }
 
-    @PutMapping
-    public ResponseEntity<DirectorDTO> update(@Valid @RequestBody
-                                              DirectorDTO directorDTO) throws Exception{
-        final var updatedDirectorDTO = directorService.update(directorDTO);
-        return new ResponseEntity<>(updatedDirectorDTO, HttpStatus.OK);
+    @GetMapping
+    public ResponseEntity<List<DirectorDTO>> getAll(){
+        return ResponseEntity.ok(directorService.getAll());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception{
+        directorService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

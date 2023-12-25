@@ -2,7 +2,6 @@ package nst.springboot.restexample01.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import nst.springboot.restexample01.converter.impl.DirectorHistoryConverter;
-import nst.springboot.restexample01.domain.DirectorHistory;
 import nst.springboot.restexample01.dto.DirectorHistoryDTO;
 import nst.springboot.restexample01.repository.DirectorHistoryRepository;
 import nst.springboot.restexample01.service.abstraction.DirectorHistoryService;
@@ -27,7 +26,9 @@ public class DirectorHistoryServiceImpl implements DirectorHistoryService {
 
     @Override
     public List<DirectorHistoryDTO> getAll() {
-        return null;
+        return directorHistoryConverter.listToDto(
+                directorHistoryRepository.findAll()
+        );
     }
 
     @Override

@@ -6,7 +6,9 @@ create table tbl_secretary_history(
     department_id bigint unsigned,
     primary key (id),
     constraint secretary_fk2 FOREIGN KEY (secretary_id)
-    REFERENCES tbl_secretary(id),
+    REFERENCES tbl_secretary(id) on update cascade
+    on delete cascade,
     constraint department_fk3 FOREIGN KEY (department_id)
-    REFERENCES tbl_department(id)
+    REFERENCES tbl_department(id) on update cascade
+    on delete cascade
 )

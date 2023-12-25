@@ -7,4 +7,5 @@ create table tbl_director(
     primary key (id),
     constraint department_fk1 FOREIGN KEY
     (department_id) REFERENCES tbl_department(id)
+    on update cascade on delete cascade
 )

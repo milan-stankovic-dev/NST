@@ -8,11 +8,15 @@ create table tbl_member(
     scientific_field_id bigint unsigned,
     primary key (id),
     constraint academic_title_fk1 FOREIGN KEY
-    (academic_title_id) REFERENCES tbl_academic_title(id),
+    (academic_title_id) REFERENCES tbl_academic_title(id)
+    on update cascade on delete cascade,
     constraint department_fk6 FOREIGN KEY
-    (department_id) REFERENCES tbl_department(id),
+    (department_id) REFERENCES tbl_department(id)
+    on update cascade on delete cascade,
     constraint education_title_fk2 FOREIGN KEY
-    (education_title_id) REFERENCES tbl_education_title(id),
+    (education_title_id) REFERENCES tbl_education_title(id)
+    on update cascade on delete cascade,
     constraint scientific_field_fk1 FOREIGN KEY
     (scientific_field_id) REFERENCES tbl_scientific_field(id)
+    on update cascade on delete cascade
 )

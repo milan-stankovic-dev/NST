@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
-import nst.springboot.restexample01.domain.Department;
+import nst.springboot.restexample01.domain.impl.Department;
 import nst.springboot.restexample01.repository.DepartmentRepository;
 import nst.springboot.restexample01.service.abstraction.DepartmentService;
 import nst.springboot.restexample01.converter.impl.DepartmentConverter;

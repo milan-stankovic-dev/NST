@@ -24,7 +24,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
         System.out.println("-----------pozvana metoda za obradu izuzetka u kontroleru -------------");
 
         MyErrorDetails myErrorDetails = new MyErrorDetails(e.getMessage());
-
+        e.printStackTrace();
         return new ResponseEntity<>(myErrorDetails, HttpStatus.NOT_FOUND);
 
     }

@@ -1,20 +1,20 @@
-package nst.springboot.restexample01.domain;
+package nst.springboot.restexample01.domain.impl;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import nst.springboot.restexample01.domain.BaseEntity;
 
-import java.time.Instant;
-import java.util.List;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "tbl_director")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Director {
+public class Director implements BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,7 +22,7 @@ public class Director {
     @Column(name = "start_date")
     @NotNull
     @PastOrPresent
-    private Instant startDate;
+    private LocalDate startDate;
 
     @NotEmpty(message = "Director's name must be inputted.")
     @Size(min = 2, max = 25, message = "Director's first name must" +

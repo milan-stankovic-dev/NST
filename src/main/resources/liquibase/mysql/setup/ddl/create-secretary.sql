@@ -7,4 +7,5 @@ create table tbl_secretary(
     primary key (id),
     constraint department_fk2 FOREIGN KEY
     (department_id) REFERENCES tbl_department(id)
+    on update cascade on delete cascade
 )

@@ -1,4 +1,4 @@
-package nst.springboot.restexample01.domain;
+package nst.springboot.restexample01.domain.impl;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,13 +13,14 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import nst.springboot.restexample01.domain.BaseEntity;
 
 @Entity
 @Table(name = "tbl_subject")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Subject {
+public class Subject implements BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

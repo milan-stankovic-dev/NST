@@ -6,8 +6,10 @@ create table tbl_director_history (
     department_id bigint unsigned,
     primary key (id),
     constraint director_fk FOREIGN KEY (director_id)
-    REFERENCES tbl_director(id),
+    REFERENCES tbl_director(id) on update cascade
+    on delete cascade,
     constraint department_fk4 FOREIGN KEY (department_id)
-    REFERENCES tbl_department(id)
+    REFERENCES tbl_department(id) on update cascade
+    on delete cascade
 )
 

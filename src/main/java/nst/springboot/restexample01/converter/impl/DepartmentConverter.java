@@ -1,36 +1,58 @@
 package nst.springboot.restexample01.converter.impl;
 
+import lombok.RequiredArgsConstructor;
 import nst.springboot.restexample01.converter.DTOEntityConverter;
-import nst.springboot.restexample01.domain.Department;
+import nst.springboot.restexample01.domain.impl.Department;
 import nst.springboot.restexample01.dto.DepartmentDTO;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class DepartmentConverter implements DTOEntityConverter<DepartmentDTO, Department> {
+
+    private final SecretaryConverter secretaryConverter;
+    private final DirectorConverter directorConverter;
+    private final SecretaryHistoryConverter secretaryHistoryConverter;
+    private final DirectorHistoryConverter directorHistoryConverter;
 
     @Override
     public DepartmentDTO toDto(Department entity) {
-        return new DepartmentDTO(
+        return (entity == null? null : new DepartmentDTO(
                 entity.getId(),
                 entity.getName(),
                 entity.getShortName(),
-                entity.getSecretary(),
-                entity.getSecretaryHistories(),
-                entity.getDirector(),
-                entity.getDirectorHistories()
-        );
+                secretaryConverter.toDto(
+                        entity.getSecretary()),
+                secretaryHistoryConverter.listToDto(
+                        entity.getSecretaryHistories()
+                ),
+                directorConverter.toDto(
+                        entity.getDirector()
+                ),
+                directorHistoryConverter.listToDto(
+                        entity.getDirectorHistories()
+                )
+        ));
     }
 
     @Override
     public Department toEntity(DepartmentDTO dto) {
-        return new Department(
+        return (dto == null? null : new Department(
                 dto.id(),
                 dto.name(),
                 dto.shortName(),
-                dto.secretary(),
-                dto.secretaryHistories(),
-                dto.director(),
-                dto.directorHistories());
+                secretaryConverter.toEntity(
+                        dto.secretaryDTO()
+                ),
+                secretaryHistoryConverter.listToEntity(
+                        dto.secretaryHistories()
+                ),
+                directorConverter.toEntity(
+                        dto.directorDTO()
+                ),
+                directorHistoryConverter.listToEntity(
+                        dto.directorHistories()
+                )));
     }
     
 }

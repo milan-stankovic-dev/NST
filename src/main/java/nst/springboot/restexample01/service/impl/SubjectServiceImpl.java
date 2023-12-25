@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import nst.springboot.restexample01.domain.Department;
-import nst.springboot.restexample01.domain.Subject;
+import nst.springboot.restexample01.domain.impl.Department;
+import nst.springboot.restexample01.domain.impl.Subject;
 import nst.springboot.restexample01.repository.DepartmentRepository;
 import nst.springboot.restexample01.repository.SubjectRepository;
 import nst.springboot.restexample01.service.abstraction.SubjectService;

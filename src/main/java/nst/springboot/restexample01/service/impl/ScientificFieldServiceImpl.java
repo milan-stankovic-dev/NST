@@ -2,7 +2,7 @@ package nst.springboot.restexample01.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import nst.springboot.restexample01.converter.impl.ScientificFieldConverter;
-import nst.springboot.restexample01.domain.ScientificField;
+import nst.springboot.restexample01.domain.impl.ScientificField;
 import nst.springboot.restexample01.dto.ScientificFieldDTO;
 import nst.springboot.restexample01.repository.ScientificFieldRepository;
 import nst.springboot.restexample01.service.abstraction.ScientificFieldService;

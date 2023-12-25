@@ -1,19 +1,20 @@
-package nst.springboot.restexample01.domain;
+package nst.springboot.restexample01.domain.impl;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import nst.springboot.restexample01.domain.BaseEntity;
 
-import java.time.Instant;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "tbl_secretary")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Secretary {
+public class Secretary implements BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,7 +22,7 @@ public class Secretary {
     @Column(name = "start_date")
     @NotNull
     @PastOrPresent
-    private Instant startDate;
+    private LocalDate startDate;
 
     @NotEmpty(message = "Secretary's name must be inputted.")
     @Size(min = 2, max = 25, message = "First name must be from 2 to " +

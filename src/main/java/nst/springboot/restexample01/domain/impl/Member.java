@@ -1,4 +1,4 @@
-package nst.springboot.restexample01.domain;
+package nst.springboot.restexample01.domain.impl;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import nst.springboot.restexample01.domain.BaseEntity;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Member {
+public class Member implements BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,6 +35,10 @@ public class Member {
     private String lastName;
 
     @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
+
+    @ManyToOne
     @JoinColumn(name = "academic_title_id")
     private AcademicTitle academicTitle;
 
@@ -42,10 +47,11 @@ public class Member {
     private EducationTitle educationTitle;
 
     @ManyToOne
-    @JoinColumn(name = "scientific_title_id")
+    @JoinColumn(name = "scientific_field_id")
     private ScientificField scientificField;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL,
+    @OneToMany(mappedBy = "member", cascade = CascadeType.MERGE,
     orphanRemoval = true)
     private List<AcademicTitleHistory> histories;
+
 }

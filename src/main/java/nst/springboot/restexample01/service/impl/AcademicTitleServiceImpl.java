@@ -2,7 +2,7 @@ package nst.springboot.restexample01.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import nst.springboot.restexample01.converter.impl.AcademicTitleConverter;
-import nst.springboot.restexample01.domain.AcademicTitle;
+import nst.springboot.restexample01.domain.impl.AcademicTitle;
 import nst.springboot.restexample01.dto.AcademicTitleDTO;
 import nst.springboot.restexample01.repository.AcademicTitleRepository;
 import nst.springboot.restexample01.service.abstraction.AcademicTitleService;

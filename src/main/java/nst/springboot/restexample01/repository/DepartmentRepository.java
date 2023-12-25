@@ -5,7 +5,7 @@
 package nst.springboot.restexample01.repository;
 
 import java.util.Optional;
-import nst.springboot.restexample01.domain.Department;
+import nst.springboot.restexample01.domain.impl.Department;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
