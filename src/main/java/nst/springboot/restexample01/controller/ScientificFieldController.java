@@ -7,6 +7,8 @@ import nst.springboot.restexample01.service.abstraction.ScientificFieldService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/scientific-field")
@@ -25,5 +27,10 @@ public class ScientificFieldController {
     public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception{
         scientificFieldService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ScientificFieldDTO>> findAll(){
+        return ResponseEntity.ok(scientificFieldService.getAll());
     }
 }

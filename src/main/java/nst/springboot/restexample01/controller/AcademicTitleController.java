@@ -7,6 +7,8 @@ import nst.springboot.restexample01.service.abstraction.AcademicTitleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/academic-title")
@@ -25,5 +27,10 @@ public class AcademicTitleController {
     public ResponseEntity<Void> delete(@Valid @PathVariable Long id) throws Exception{
         academicTitleService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AcademicTitleDTO>> findAll(){
+        return ResponseEntity.ok(academicTitleService.getAll());
     }
 }

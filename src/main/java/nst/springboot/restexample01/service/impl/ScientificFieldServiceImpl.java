@@ -27,7 +27,9 @@ public class ScientificFieldServiceImpl implements ScientificFieldService {
 
     @Override
     public List<ScientificFieldDTO> getAll() {
-        return null;
+        return scientificFieldConverter.listToDto(
+            scientificFieldRepository.findAll()
+        );
     }
 
     @Override

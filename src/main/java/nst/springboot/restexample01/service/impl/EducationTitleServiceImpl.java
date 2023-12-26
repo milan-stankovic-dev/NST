@@ -31,7 +31,9 @@ public class EducationTitleServiceImpl implements EducationTitleService {
 
     @Override
     public List<EducationTitleDTO> getAll() {
-        return null;
+        return educationTitleConverter.listToDto(
+                educationTitleRepository.findAll()
+        );
     }
 
     @Override

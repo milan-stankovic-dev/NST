@@ -51,10 +51,9 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public List<SubjectDTO> getAll() {
-        return subjectRepository
-                .findAll()
-                .stream().map(subjectConverter::toDto)
-                .toList();
+        return subjectConverter.listToDto(
+                subjectRepository.findAll()
+        );
     }
 
     @Override

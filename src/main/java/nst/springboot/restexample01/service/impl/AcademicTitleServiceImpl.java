@@ -27,7 +27,9 @@ public class AcademicTitleServiceImpl implements AcademicTitleService {
 
     @Override
     public List<AcademicTitleDTO> getAll() {
-        return null;
+        return academicTitleConverter.listToDto(
+                academicTitleRepository.findAll()
+        );
     }
 
     @Override
