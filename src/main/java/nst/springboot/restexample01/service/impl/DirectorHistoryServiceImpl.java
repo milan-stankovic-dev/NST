@@ -33,16 +33,7 @@ public class DirectorHistoryServiceImpl implements DirectorHistoryService {
 
     @Override
     public void delete(Long aLong) throws Exception {
-
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public DirectorHistoryDTO update(DirectorHistoryDTO e) throws Exception {
-        return null;
-    }
-
-    @Override
-    public DirectorHistoryDTO findById(Long aLong) throws Exception {
-        return null;
-    }
 }

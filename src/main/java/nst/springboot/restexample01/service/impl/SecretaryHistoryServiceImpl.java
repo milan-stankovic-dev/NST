@@ -30,16 +30,6 @@ public class SecretaryHistoryServiceImpl implements SecretaryHistoryService {
 
     @Override
     public void delete(Long aLong) throws Exception {
-
-    }
-
-    @Override
-    public SecretaryHistoryDTO update(SecretaryHistoryDTO e) throws Exception {
-        return null;
-    }
-
-    @Override
-    public SecretaryHistoryDTO findById(Long aLong) throws Exception {
-        return null;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

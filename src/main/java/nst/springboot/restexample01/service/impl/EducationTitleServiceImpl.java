@@ -49,13 +49,4 @@ public class EducationTitleServiceImpl implements EducationTitleService {
         educationTitleRepository.deleteById(id);
     }
 
-    @Override
-    public EducationTitleDTO update(EducationTitleDTO e) throws Exception {
-        return null;
-    }
-
-    @Override
-    public EducationTitleDTO findById(Long aLong) throws Exception {
-        return null;
-    }
 }

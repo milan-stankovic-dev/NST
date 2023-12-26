@@ -45,13 +45,4 @@ public class ScientificFieldServiceImpl implements ScientificFieldService {
         scientificFieldRepository.deleteById(id);
     }
 
-    @Override
-    public ScientificFieldDTO update(ScientificFieldDTO e) throws Exception {
-        return null;
-    }
-
-    @Override
-    public ScientificFieldDTO findById(Long aLong) throws Exception {
-        return null;
-    }
 }

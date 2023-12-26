@@ -34,17 +34,7 @@ public class AcademicTitleHistoryServiceImpl implements
 
     @Override
     public void delete(Long aLong) throws Exception {
-
-    }
-
-    @Override
-    public AcademicTitleHistoryDTO update(AcademicTitleHistoryDTO e) throws Exception {
-        return null;
-    }
-
-    @Override
-    public AcademicTitleHistoryDTO findById(Long aLong) throws Exception {
-        return null;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

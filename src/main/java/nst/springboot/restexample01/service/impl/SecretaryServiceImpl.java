@@ -18,16 +18,7 @@ public class SecretaryServiceImpl implements SecretaryService {
 
     @Override
     public void delete(Long aLong) throws Exception {
-
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public SecretaryDTO update(SecretaryDTO e) throws Exception {
-        return null;
-    }
-
-    @Override
-    public SecretaryDTO findById(Long aLong) throws Exception {
-        return null;
-    }
 }

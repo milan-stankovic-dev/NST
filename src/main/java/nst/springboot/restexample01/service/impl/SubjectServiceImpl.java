@@ -70,11 +70,6 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public SubjectDTO update(SubjectDTO subjectDto) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
     public SubjectDTO findById(Long id) throws Exception {
         Optional<Subject> subject = subjectRepository.findById(id);
         if (subject.isPresent()) {

@@ -156,11 +156,6 @@ public class DirectorServiceImpl implements DirectorService {
         moveCurrentDirectorToHistory(currentDirector);
     }
 
-    @Override
-    public DirectorDTO update(DirectorDTO directorDTO) throws Exception {
-
-    return null;
-    }
 
     @Override
     public DirectorDTO findById(Long id) throws Exception {

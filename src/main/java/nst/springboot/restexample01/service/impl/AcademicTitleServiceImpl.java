@@ -45,13 +45,4 @@ public class AcademicTitleServiceImpl implements AcademicTitleService {
         academicTitleRepository.deleteById(id);
     }
 
-    @Override
-    public AcademicTitleDTO update(AcademicTitleDTO e) throws Exception {
-        return null;
-    }
-
-    @Override
-    public AcademicTitleDTO findById(Long aLong) throws Exception {
-        return null;
-    }
 }

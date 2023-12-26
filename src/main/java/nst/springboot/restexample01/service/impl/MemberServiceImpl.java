@@ -83,16 +83,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberDTO update(MemberDTO e) throws Exception {
-        return null;
-    }
-
-    @Override
-    public MemberDTO findById(Long aLong) throws Exception {
-        return null;
-    }
-
-    @Override
     @Transactional
     public MinimalMemberDTO updateAcademicTitle(MinimalMemberDTO member) throws Exception {
         final Long id = member.id();
