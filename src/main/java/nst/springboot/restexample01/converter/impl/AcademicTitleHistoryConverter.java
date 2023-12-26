@@ -5,6 +5,7 @@ import nst.springboot.restexample01.converter.DTOEntityConverter;
 import nst.springboot.restexample01.domain.impl.AcademicTitleHistory;
 import nst.springboot.restexample01.domain.impl.Member;
 import nst.springboot.restexample01.dto.AcademicTitleHistoryDTO;
+import nst.springboot.restexample01.role.MemberRole;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class AcademicTitleHistoryConverter implements DTOEntityConverter
                 t.startDate(),
                 t.endDate(),
                 new Member(
-                        t.id(), "DUMMY", "DUMMY",
+                        t.id(), "DUMMY", "DUMMY", MemberRole.REGULAR,
                         null , null,
                         null, null,
                         null, new ArrayList<>()),

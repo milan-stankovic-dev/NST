@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import nst.springboot.restexample01.domain.BaseEntity;
+import nst.springboot.restexample01.role.MemberRole;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -34,6 +35,9 @@ public class Member implements BaseEntity {
             "must be between 2 and 25 characters.")
     @Column(name = "last_name")
     private String lastName;
+
+    @Enumerated(EnumType.STRING)
+    private MemberRole role;
 
     @Column(name = "start_date")
     private LocalDate startDate;

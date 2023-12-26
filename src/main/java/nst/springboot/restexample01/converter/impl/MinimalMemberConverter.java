@@ -5,6 +5,7 @@ import nst.springboot.restexample01.converter.DTOEntityConverter;
 import nst.springboot.restexample01.domain.impl.Member;
 import nst.springboot.restexample01.dto.MemberDTO;
 import nst.springboot.restexample01.dto.MinimalMemberDTO;
+import nst.springboot.restexample01.role.MemberRole;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class MinimalMemberConverter implements
     public Member toEntity(MinimalMemberDTO t) {
         return (t == null ? null : new Member(
                 t.id(),
-                "DUMMY", "DUMMY",
+                "DUMMY", "DUMMY", MemberRole.REGULAR,
                 t.startDate(),
                 null,
                 academicTitleConverter.toEntity(t.academicTitleDTO()),

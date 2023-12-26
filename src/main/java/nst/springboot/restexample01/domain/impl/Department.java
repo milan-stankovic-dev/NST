@@ -10,9 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "tbl_department")
-@Getter
-@Setter
-@EqualsAndHashCode
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Department implements BaseEntity {
@@ -31,36 +29,5 @@ public class Department implements BaseEntity {
             "long.")
     @Column(name = "short_name")
     private String shortName;
-
-    @OneToOne(mappedBy = "department",
-            cascade = CascadeType.ALL)
-    @JoinColumn(name = "secretary_id")
-    private Secretary secretary;
-
-    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL,
-    orphanRemoval = true)
-    private List<SecretaryHistory> secretaryHistories;
-
-    @OneToOne(mappedBy = "department",
-    cascade = CascadeType.ALL)
-    private Director director;
-
-    @OneToMany(mappedBy = "department",
-            cascade = CascadeType.ALL,
-    orphanRemoval = true)
-    private List<DirectorHistory> directorHistories;
-
-    @Override
-    public String toString() {
-        return "Department{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", shortName='" + shortName + '\'' +
-                ", secretary=" + (secretary != null ? secretary.getId() : null) +
-                 ", secretaryHistories=" + secretaryHistories +
-                ", director=" + (director != null ? director.getId() : null) +
-                ", directorHistories=" + directorHistories +
-                '}';
-    }
 
 }

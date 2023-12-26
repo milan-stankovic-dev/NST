@@ -1,15 +1,16 @@
-create table tbl_director_history (
+create table tbl_member_history (
     id bigint unsigned not null AUTO_INCREMENT,
     start_date datetime,
     end_date datetime,
-    director_id bigint unsigned,
+    role varchar(10),
     department_id bigint unsigned,
+    member_id bigint unsigned,
     primary key (id),
-    constraint director_fk FOREIGN KEY (director_id)
-    REFERENCES tbl_director(id) on update cascade
-    on delete cascade,
     constraint department_fk4 FOREIGN KEY (department_id)
     REFERENCES tbl_department(id) on update cascade
+    on delete cascade,
+    constraint member_fk1 FOREIGN KEY (member_id)
+    REFERENCES tbl_member(id) on update cascade
     on delete cascade
 )
 
