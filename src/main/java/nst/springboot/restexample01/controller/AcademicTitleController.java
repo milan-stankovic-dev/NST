@@ -15,7 +15,7 @@ import java.util.List;
 public class AcademicTitleController {
     private final AcademicTitleService academicTitleService;
 
-    @PostMapping
+    @PostMapping("/save")
     public ResponseEntity<AcademicTitleDTO> save(@Valid @RequestBody
                                                      AcademicTitleDTO academicTitleDTO)
                                                         throws Exception{
@@ -29,7 +29,7 @@ public class AcademicTitleController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<AcademicTitleDTO>> findAll(){
         return ResponseEntity.ok(academicTitleService.getAll());
     }

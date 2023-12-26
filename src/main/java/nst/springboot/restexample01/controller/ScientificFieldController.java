@@ -15,7 +15,7 @@ import java.util.List;
 public class ScientificFieldController {
     private final ScientificFieldService scientificFieldService;
 
-    @PostMapping
+    @PostMapping("/save")
     public ResponseEntity<ScientificFieldDTO> save(@Valid @RequestBody
                                                    ScientificFieldDTO scientificFieldDTO) throws Exception{
         final var scientificFieldDtoFromService =
@@ -29,7 +29,7 @@ public class ScientificFieldController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<ScientificFieldDTO>> findAll(){
         return ResponseEntity.ok(scientificFieldService.getAll());
     }

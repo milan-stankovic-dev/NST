@@ -29,7 +29,7 @@ public class DepartmentController {
     private final DepartmentService departmentService;
 
     //dodaj novi department
-    @PostMapping
+    @PostMapping("/save")
     public ResponseEntity<DepartmentDTO> save(@Valid @RequestBody DepartmentDTO departmentDto) throws Exception {
         //ResponseEntity
         DepartmentDTO deptDto = departmentService.save(departmentDto);
@@ -37,7 +37,7 @@ public class DepartmentController {
     }
 
    
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<DepartmentDTO>> getAll() {
         List<DepartmentDTO> departments = departmentService.getAll();
         return new ResponseEntity<>(departments, HttpStatus.OK);

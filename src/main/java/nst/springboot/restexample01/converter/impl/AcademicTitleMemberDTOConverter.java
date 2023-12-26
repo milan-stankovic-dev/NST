@@ -3,8 +3,7 @@ package nst.springboot.restexample01.converter.impl;
 import lombok.RequiredArgsConstructor;
 import nst.springboot.restexample01.converter.DTOEntityConverter;
 import nst.springboot.restexample01.domain.impl.Member;
-import nst.springboot.restexample01.dto.MemberDTO;
-import nst.springboot.restexample01.dto.MinimalMemberDTO;
+import nst.springboot.restexample01.dto.AcademicTitleMemberDTO;
 import nst.springboot.restexample01.role.MemberRole;
 import org.springframework.stereotype.Component;
 
@@ -12,14 +11,14 @@ import java.util.ArrayList;
 
 @Component
 @RequiredArgsConstructor
-public class MinimalMemberConverter implements
-        DTOEntityConverter<MinimalMemberDTO, Member> {
+public class AcademicTitleMemberDTOConverter implements
+        DTOEntityConverter<AcademicTitleMemberDTO, Member> {
     private final AcademicTitleConverter academicTitleConverter;
     private final ScientificFieldConverter scientificFieldConverter;
 
     @Override
-    public MinimalMemberDTO toDto(Member e) {
-        return (e == null ? null : new MinimalMemberDTO(
+    public AcademicTitleMemberDTO toDto(Member e) {
+        return (e == null ? null : new AcademicTitleMemberDTO(
                 e.getId(),
                 e.getStartDate(),
                 academicTitleConverter.toDto(e.getAcademicTitle()),
@@ -28,7 +27,7 @@ public class MinimalMemberConverter implements
     }
 
     @Override
-    public Member toEntity(MinimalMemberDTO t) {
+    public Member toEntity(AcademicTitleMemberDTO t) {
         return (t == null ? null : new Member(
                 t.id(),
                 "DUMMY", "DUMMY", MemberRole.REGULAR,

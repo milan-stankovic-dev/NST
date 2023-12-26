@@ -4,15 +4,16 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import nst.springboot.restexample01.converter.impl.AcademicTitleConverter;
 import nst.springboot.restexample01.converter.impl.MemberConverter;
-import nst.springboot.restexample01.converter.impl.MinimalMemberConverter;
+import nst.springboot.restexample01.converter.impl.AcademicTitleMemberDTOConverter;
 import nst.springboot.restexample01.converter.impl.ScientificFieldConverter;
 import nst.springboot.restexample01.domain.impl.*;
 import nst.springboot.restexample01.dto.MemberDTO;
-import nst.springboot.restexample01.dto.MinimalMemberDTO;
+import nst.springboot.restexample01.dto.AcademicTitleMemberDTO;
+import nst.springboot.restexample01.dto.RoleChangeMemberDTO;
 import nst.springboot.restexample01.repository.*;
+import nst.springboot.restexample01.role.MemberRole;
 import nst.springboot.restexample01.service.abstraction.MemberService;
 import nst.springboot.restexample01.util.ResolveEntityLinksUtil;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -25,7 +26,7 @@ import java.util.Optional;
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final MemberConverter memberConverter;
-    private final MinimalMemberConverter minimalMemberConverter;
+    private final AcademicTitleMemberDTOConverter academicTitleMemberDTOConverter;
     private final AcademicTitleConverter academicTitleConverter;
     private final ScientificFieldConverter scientificFieldConverter;
     private final DepartmentRepository departmentRepository;
@@ -38,6 +39,25 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public MemberDTO save(MemberDTO memberDTO) throws Exception {
         final Member memberToSave = memberConverter.toEntity(memberDTO);
+
+        if(memberToSave.getRole() == MemberRole.DIRECTOR ||
+                memberToSave.getRole() == MemberRole.SECRETARY){
+            throw new Exception("The member you are trying to save is a director or secretary." +
+                    "This endpoint is only concerned with adding new regular members." +
+                    "To add a custom member, please refer to a different endpoint.");
+        }
+
+        final Optional<Member> testingMemberOpt =
+                memberRepository.findByFirstNameAndLastName(
+                        memberToSave.getFirstName(),
+                        memberToSave.getLastName()
+                );
+
+        if(testingMemberOpt.isPresent()){
+            throw new Exception("This member already exists. If you're trying to " +
+                    "update something about this user please try a different endpoint." +
+                    "This endpoint is only concerned with adding new members.");
+        }
 
         final Department newDept = resolveEntityLinksUtil.saveIfNotNull(
                 memberToSave.getDepartment(), departmentRepository);
@@ -84,7 +104,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public MinimalMemberDTO updateAcademicTitle(MinimalMemberDTO member) throws Exception {
+    public AcademicTitleMemberDTO updateAcademicTitle(AcademicTitleMemberDTO member) throws Exception {
         final Long id = member.id();
 
         if(id == null){
@@ -156,6 +176,11 @@ public class MemberServiceImpl implements MemberService {
         memberForUpdate.setStartDate(endDate);
         final var savedMember = memberRepository.save(memberForUpdate);
 
-        return minimalMemberConverter.toDto(savedMember);
+        return academicTitleMemberDTOConverter.toDto(savedMember);
+    }
+
+    @Override
+    public RoleChangeMemberDTO updateRole(RoleChangeMemberDTO memberDTO) {
+        return null;
     }
 }

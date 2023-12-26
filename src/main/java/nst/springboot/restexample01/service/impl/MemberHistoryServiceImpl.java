@@ -1,6 +1,7 @@
 package nst.springboot.restexample01.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import nst.springboot.restexample01.converter.impl.MemberHistoryConverter;
 import nst.springboot.restexample01.dto.MemberHistoryDTO;
 import nst.springboot.restexample01.repository.MemberHistoryRepository;
 import nst.springboot.restexample01.service.abstraction.MemberHistoryService;
@@ -12,18 +13,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberHistoryServiceImpl implements MemberHistoryService {
     private MemberHistoryRepository memberHistoryRepository;
-    @Override
-    public MemberHistoryDTO save(MemberHistoryDTO e) throws Exception {
-        return null;
-    }
+    private MemberHistoryConverter memberHistoryConverter;
 
     @Override
     public List<MemberHistoryDTO> getAll() {
-        return null;
+        return memberHistoryConverter.listToDto(
+                memberHistoryRepository.findAll()
+        );
     }
 
-    @Override
-    public void delete(Long aLong) throws Exception {
 
-    }
 }

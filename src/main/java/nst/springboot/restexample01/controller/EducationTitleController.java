@@ -15,7 +15,7 @@ import java.util.List;
 public class EducationTitleController {
     private final EducationTitleService educationTitleService;
 
-    @PostMapping
+    @PostMapping("/save")
     public ResponseEntity<EducationTitleDTO> save(@Valid @RequestBody
                                                   EducationTitleDTO educationTitleDTO) throws Exception{
         final var educationTitleFromServiceDTO =
@@ -29,7 +29,7 @@ public class EducationTitleController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<EducationTitleDTO>> getAll(){
         return ResponseEntity.ok(educationTitleService.getAll());
     }

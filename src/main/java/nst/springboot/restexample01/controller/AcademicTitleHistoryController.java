@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("academic-title-history")
 public class AcademicTitleHistoryController {
     private final AcademicTitleHistoryService academicTitleHistoryService;
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<AcademicTitleHistoryDTO>> getAll(){
         return ResponseEntity.ok(academicTitleHistoryService.getAll());
     }

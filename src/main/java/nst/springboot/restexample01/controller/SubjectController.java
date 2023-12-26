@@ -25,7 +25,7 @@ public class SubjectController {
     private final SubjectService subjectService;
 
     //dodaj novi department
-    @PostMapping
+    @PostMapping("/save")
     public ResponseEntity<SubjectDTO> save(@Valid @RequestBody SubjectDTO subject) throws Exception {
         //ResponseEntity
         SubjectDTO subjectDto = subjectService.save(subject);
@@ -33,7 +33,7 @@ public class SubjectController {
     }
 
     //vrati sve
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<SubjectDTO>> getAll() {
         List<SubjectDTO> subjects = subjectService.getAll();
         return new ResponseEntity<>(subjects, HttpStatus.OK);
