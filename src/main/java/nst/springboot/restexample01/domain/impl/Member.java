@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import nst.springboot.restexample01.domain.BaseEntity;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -33,6 +34,9 @@ public class Member implements BaseEntity {
             "must be between 2 and 25 characters.")
     @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "start_date")
+    private LocalDate startDate;
 
     @ManyToOne
     @JoinColumn(name = "department_id")

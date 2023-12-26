@@ -22,7 +22,6 @@ public class ResolveEntityLinksUtil {
         }
 
         if (entity.getId() == null || !repository.existsById(entity.getId())) {
-            System.out.println("DONE");
             return repository.save(entity);
         }
 

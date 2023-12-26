@@ -36,7 +36,8 @@ public class AcademicTitleHistoryConverter implements DTOEntityConverter
                 t.startDate(),
                 t.endDate(),
                 new Member(
-                        t.id(), "DUMMY", "DUMMY", null,
+                        t.id(), "DUMMY", "DUMMY",
+                        null , null,
                         null, null,
                         null, new ArrayList<>()),
                 academicTitleConverter.toEntity(t.academicTitleDTO()),

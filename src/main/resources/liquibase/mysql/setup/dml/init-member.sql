@@ -1,6 +1,7 @@
-insert into tbl_member(first_name, last_name, academic_title_id,
+insert into tbl_member(first_name, last_name, start_date, academic_title_id,
                     department_id, education_title_id, scientific_field_id)
-values ("Pera", "Peric",(select (id)
+values ("Pera", "Peric", "2020-03-04",
+                        (select (id)
                         from tbl_academic_title
                         where name = "Lecturer"),
                         (select (id)
@@ -12,9 +13,10 @@ values ("Pera", "Peric",(select (id)
                         (select (id)
                         from tbl_scientific_field
                         where field_name = "HCI"));
-insert into tbl_member(first_name, last_name, academic_title_id,
+insert into tbl_member(first_name, last_name, start_date,  academic_title_id,
                     department_id, education_title_id, scientific_field_id)
-values ("Mara", "Maric",(select (id)
+values ("Mara", "Maric", "2023-04-06",
+                        (select (id)
                         from tbl_academic_title
                         where name = "Emeritus"),
                         (select (id)
@@ -26,9 +28,10 @@ values ("Mara", "Maric",(select (id)
                         (select (id)
                         from tbl_scientific_field
                         where field_name = "Digital marketing"));
-insert into tbl_member(first_name, last_name, academic_title_id,
+insert into tbl_member(first_name, last_name, start_date, academic_title_id,
                     department_id, education_title_id, scientific_field_id)
-values ("Zoran", "Zoric",(select (id)
+values ("Zoran", "Zoric", "2009-10-23",
+                        (select (id)
                         from tbl_academic_title
                         where name = "Instructor"),
                         (select (id)
@@ -40,9 +43,10 @@ values ("Zoran", "Zoric",(select (id)
                         (select (id)
                         from tbl_scientific_field
                         where field_name = "Theory of computation"));
-insert into tbl_member(first_name, last_name, academic_title_id,
+insert into tbl_member(first_name, last_name, start_date, academic_title_id,
                     department_id, education_title_id, scientific_field_id)
-values ("Svetlana", "Savic",(select (id)
+values ("Svetlana", "Savic", "2015-01-10",
+                        (select (id)
                         from tbl_academic_title
                         where name = "Distinguished professor"),
                         (select (id)
@@ -54,9 +58,10 @@ values ("Svetlana", "Savic",(select (id)
                         (select (id)
                         from tbl_scientific_field
                         where field_name = "Programming languages"));
-insert into tbl_member(first_name, last_name, academic_title_id,
+insert into tbl_member(first_name, last_name, start_date, academic_title_id,
                     department_id, education_title_id, scientific_field_id)
-values ("Milan", "Milanovic",(select (id)
+values ("Milan", "Milanovic", "2012-02-29",
+                        (select (id)
                         from tbl_academic_title
                         where name = "Senior lecturer"),
                         (select (id)
@@ -68,9 +73,10 @@ values ("Milan", "Milanovic",(select (id)
                         (select (id)
                         from tbl_scientific_field
                         where field_name = "Digital marketing"));
-insert into tbl_member(first_name, last_name, academic_title_id,
+insert into tbl_member(first_name, last_name, start_date, academic_title_id,
                     department_id, education_title_id, scientific_field_id)
-values ("Sima", "Simic",(select (id)
+values ("Sima", "Simic", "2021-10-04",
+                        (select (id)
                         from tbl_academic_title
                         where name = "Lecturer"),
                         (select (id)
