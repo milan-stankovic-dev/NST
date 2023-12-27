@@ -28,6 +28,11 @@ public class MemberController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/query")
+    public ResponseEntity<MemberDTO> queryById(@RequestParam("id") Long id) throws Exception {
+        return ResponseEntity.ok(memberService.queryById(id));
+    }
+
     @PostMapping("/save-regular")
     public ResponseEntity<MemberDTO> save(@Valid @RequestBody
                                               MemberDTO memberDTO) throws Exception{

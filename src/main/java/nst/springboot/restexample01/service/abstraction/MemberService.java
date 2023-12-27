@@ -8,5 +8,7 @@ import nst.springboot.restexample01.service.DomainService;
 public interface MemberService extends DomainService<MemberDTO, Long> {
     AcademicTitleMemberDTO updateAcademicTitle(AcademicTitleMemberDTO member) throws Exception;
 
-    RoleChangeMemberDTO updateRole(RoleChangeMemberDTO memberDTO);
+    RoleChangeMemberDTO updateRole(RoleChangeMemberDTO memberDTO) throws Exception;
+
+    MemberDTO queryById(Long id) throws Exception;
 }

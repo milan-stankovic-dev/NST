@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("academic-title-history")
+@RequestMapping("/academic-title-history")
 public class AcademicTitleHistoryController {
     private final AcademicTitleHistoryService academicTitleHistoryService;
     @GetMapping("/all")

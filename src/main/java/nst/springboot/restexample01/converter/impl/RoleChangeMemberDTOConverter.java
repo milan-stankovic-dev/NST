@@ -3,6 +3,7 @@ package nst.springboot.restexample01.converter.impl;
 import nst.springboot.restexample01.converter.DTOEntityConverter;
 import nst.springboot.restexample01.domain.impl.Member;
 import nst.springboot.restexample01.dto.RoleChangeMemberDTO;
+import nst.springboot.restexample01.role.MemberRole;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

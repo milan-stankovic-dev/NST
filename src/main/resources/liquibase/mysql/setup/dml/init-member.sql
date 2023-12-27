@@ -75,7 +75,7 @@ values ("Stevan", "Markovic", "2022-03-04", "SECRETARY",
                         where name = "Senior lecturer"),
                         (select (id)
                         from tbl_department
-                        WHERE short_name="MMKLAB"),
+                        WHERE short_name="SILAB"),
                         (select (id)
                         from tbl_education_title
                         where title_name = "Assistant dean"),

@@ -22,7 +22,7 @@ public class AcademicTitleHistoryServiceImpl implements
 
     @Override
     public AcademicTitleHistoryDTO save(AcademicTitleHistoryDTO e) throws Exception {
-        return null;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

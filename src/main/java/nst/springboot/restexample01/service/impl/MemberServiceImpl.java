@@ -2,10 +2,7 @@ package nst.springboot.restexample01.service.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import nst.springboot.restexample01.converter.impl.AcademicTitleConverter;
-import nst.springboot.restexample01.converter.impl.MemberConverter;
-import nst.springboot.restexample01.converter.impl.AcademicTitleMemberDTOConverter;
-import nst.springboot.restexample01.converter.impl.ScientificFieldConverter;
+import nst.springboot.restexample01.converter.impl.*;
 import nst.springboot.restexample01.domain.impl.*;
 import nst.springboot.restexample01.dto.MemberDTO;
 import nst.springboot.restexample01.dto.AcademicTitleMemberDTO;
@@ -16,6 +13,7 @@ import nst.springboot.restexample01.service.abstraction.MemberService;
 import nst.springboot.restexample01.util.ResolveEntityLinksUtil;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +33,8 @@ public class MemberServiceImpl implements MemberService {
     private final ScientificFieldRepository scientificFieldRepository;
     private final AcademicTitleHistoryRepository academicTitleHistoryRepository;
     private final ResolveEntityLinksUtil resolveEntityLinksUtil;
+    private final MemberHistoryRepository memberHistoryRepository;
+    private final RoleChangeMemberDTOConverter roleChangeConverter;
     @Override
     @Transactional
     public MemberDTO save(MemberDTO memberDTO) throws Exception {
@@ -99,12 +99,27 @@ public class MemberServiceImpl implements MemberService {
         if(id == null){
             throw new Exception("Id must not be null");
         }
+        final var memberOptDb =
+                memberRepository.findById(id);
+        if(memberOptDb.isEmpty()){
+            throw new Exception("There is no member with " +
+                    "given id.");
+        }
+        final Member member = memberOptDb.get();
+        if(member.getRole() == MemberRole.SECRETARY ||
+            member.getRole() == MemberRole.DIRECTOR){
+            throw new Exception("You may not delete a secretary or a " +
+                    "director. The proper way to handle director and secretary " +
+                    "changes is to update their roles to member first, then delete" +
+                    "them. This requires a new member to take their spot as director " +
+                    "or secretary.");
+        }
+
         memberRepository.deleteById(id);
     }
 
-    @Override
-    @Transactional
-    public AcademicTitleMemberDTO updateAcademicTitle(AcademicTitleMemberDTO member) throws Exception {
+    private void validateUpdateAcademicTitleInput(AcademicTitleMemberDTO member)
+                    throws Exception{
         final Long id = member.id();
 
         if(id == null){
@@ -134,9 +149,16 @@ public class MemberServiceImpl implements MemberService {
             throw new Exception("Your scientific field must have a proper" +
                     "name");
         }
+    }
+
+    @Override
+    @Transactional
+    public AcademicTitleMemberDTO updateAcademicTitle(AcademicTitleMemberDTO member) throws Exception {
+
+        validateUpdateAcademicTitleInput(member);
 
         final Optional<Member> memberOptDb = memberRepository
-                .findById(id);
+                .findById(member.id());
 
         if(memberOptDb.isEmpty()){
             throw new Exception("This member may not exist.");
@@ -178,9 +200,152 @@ public class MemberServiceImpl implements MemberService {
 
         return academicTitleMemberDTOConverter.toDto(savedMember);
     }
+    private Member fetchMemberIfInputValid (RoleChangeMemberDTO memberDTO) throws Exception{
+        if(memberDTO.id() == null){
+            throw new Exception("You must input an id for member role change.");
+        }
+
+        if(memberDTO.newRole() == MemberRole.REGULAR){
+            throw new Exception("You may not degrade a current secretary or director to " +
+                    "a regular member. Downgrading happens automatically when a new director or " +
+                    "secretary are chosen. To downgrade this member, please provide a new replacement.");
+        }
+
+        return getMember(memberDTO);
+    }
+
+    private Department fetchDepartmentIfInputValid(Member memberDb) throws Exception {
+        final Optional<Department> departmentForRoleChange =
+                departmentRepository.findById(memberDb.getDepartment().getId());
+
+        if(departmentForRoleChange.isEmpty()){
+            throw new Exception("The department this member has been assigned to " +
+                    "seems to be invalid. Please update member to proceed.");
+        }
+
+        return departmentForRoleChange.get();
+    }
+
+    private Member fetchCurrentRoleHolderIfUnique(MemberRole role, Long departmentId)
+                                                                    throws Exception{
+        final List<Member> currentRoleHolderList =
+                memberRepository.findRoleHolder(role,departmentId);
+        if(currentRoleHolderList.size() != 1){
+            throw new Exception("This department has more than one " +
+                    role.toString().toUpperCase() + ". Please address this by " +
+                    "removing one of them manually.");
+        }
+
+        return currentRoleHolderList.get(0);
+    }
+
+    private MemberRole getOppositeChairmanRole(MemberRole role){
+        return role == MemberRole.DIRECTOR ? MemberRole.SECRETARY : MemberRole.DIRECTOR;
+    }
 
     @Override
-    public RoleChangeMemberDTO updateRole(RoleChangeMemberDTO memberDTO) {
-        return null;
+    @Transactional
+    public RoleChangeMemberDTO updateRole(RoleChangeMemberDTO memberDTO) throws Exception {
+
+        final var memberDb = fetchMemberIfInputValid(memberDTO);
+
+        if (memberDb.getDepartment().getId() == null) {
+            throw new Exception("This member may not be assigned to any " +
+                    "department. Please fix this error by updating said member" +
+                    "before proceeding.");
+        }
+
+        final var departmentDb = fetchDepartmentIfInputValid(memberDb);
+
+        final Member currentRoleHolder =
+                fetchCurrentRoleHolderIfUnique(memberDTO.newRole()
+                        ,departmentDb.getId());
+
+        retireCurrentChairman(currentRoleHolder);
+
+        switch (memberDb.getRole()){
+            case REGULAR:
+                currentRoleHolder.setRole(MemberRole.REGULAR);
+                memberRepository.save(currentRoleHolder);
+                break;
+            case DIRECTOR:
+            case SECRETARY:
+                final var oppositeRole = getOppositeChairmanRole(
+                        memberDb.getRole());
+                final var oppositeRoleHolder =
+                        fetchCurrentRoleHolderIfUnique(
+                                oppositeRole,
+                                departmentDb.getId());
+
+                oppositeRoleHolder.setRole(memberDb.getRole());
+                memberRepository.save(oppositeRoleHolder);
+        }
+
+        memberDb.setRole(memberDTO.newRole());
+        memberDb.setStartDate(LocalDate.now());
+        final var newRoleHolder =
+                memberRepository.save(memberDb);
+
+        return roleChangeConverter.toDto(newRoleHolder);
+
+    }
+
+    private void retireCurrentChairman(Member currentRoleHolder){
+        final LocalDate startDate = currentRoleHolder.getStartDate();
+        final LocalDate endDate = LocalDate.now();
+        final MemberRole role = currentRoleHolder.getRole();
+        final Department department = currentRoleHolder
+                .getDepartment();
+
+        final MemberHistory historyToSave =
+                new MemberHistory(
+                        null, startDate, endDate,
+                        role, department, currentRoleHolder);
+
+        memberHistoryRepository.save(historyToSave);
+    }
+
+    private Member getMember(RoleChangeMemberDTO memberDTO) throws Exception {
+
+        final Optional<Member> memberOptDb =
+                memberRepository.findById(memberDTO.id());
+
+        if(memberOptDb.isEmpty()) {
+            throw new Exception("There are no members with said id. If you wish to " +
+                    "add a new member, please refer to a different endpoint.");
+        }
+
+        final Member memberDb = memberOptDb.get();
+        final MemberRole newRole = memberDTO.newRole();
+
+        if((memberDb.getRole() == MemberRole.REGULAR &&
+            newRole == MemberRole.REGULAR) ||
+                (memberDb.getRole() == MemberRole.DIRECTOR &&
+                        newRole == MemberRole.DIRECTOR) ||
+                (memberDb.getRole() == MemberRole.SECRETARY &&
+                        newRole == MemberRole.SECRETARY)){
+            throw new Exception("There is no need for a role change. " +
+                    "User with given id already has that role.");
+        }
+        return memberDb;
+    }
+
+    @Override
+    public MemberDTO queryById(Long id) throws Exception{
+
+        if(id == null){
+            throw new Exception("Id must not be null.");
+        }
+
+        final Optional<Member> memberDbOpt =
+                memberRepository.findById(id);
+
+        if(memberDbOpt.isEmpty()){
+            throw new Exception("Member with given id not found.");
+        }
+
+        final Member savedMember = memberDbOpt.get();
+
+        return memberConverter.toDto(savedMember);
     }
 }

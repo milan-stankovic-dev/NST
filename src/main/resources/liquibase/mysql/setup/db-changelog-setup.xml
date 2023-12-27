@@ -19,30 +19,6 @@
     <changeSet id="create-department" author="milan s.">
         <sqlFile path="ddl/create-department.sql" relativeToChangelogFile="true"/>
     </changeSet>
-    <!--   &lt;!&ndash; kreiraj tabelu director&ndash;&gt;-->
-<!--    <changeSet id="create-director" author="milan s.">-->
-<!--        <sqlFile path="ddl/create-director.sql" relativeToChangelogFile="true"/>-->
-<!--    </changeSet>-->
-    <!--   &lt;!&ndash; kreiraj tabelu director&ndash;&gt;-->
-<!--    <changeSet id="create-secretary" author="milan s.">-->
-<!--        <sqlFile path="ddl/create-secretary.sql" relativeToChangelogFile="true"/>-->
-<!--    </changeSet>-->
-    <!-- azuriraj tabelu department  -->
-<!--    <changeSet id="update-department1" author="milan s.">-->
-<!--        <sqlFile path="ddl/update-department1.sql" relativeToChangelogFile="true"/>-->
-<!--    </changeSet>-->
-<!--    &lt;!&ndash; azuriraj tabelu department  &ndash;&gt;-->
-<!--    <changeSet id="update-department2" author="milan s.">-->
-<!--        <sqlFile path="ddl/update-department2.sql" relativeToChangelogFile="true"/>-->
-<!--    </changeSet>-->
-    <!--   &lt;!&ndash; kreiraj tabelu secretary history&ndash;&gt;-->
-<!--    <changeSet id="create-secretary-history" author="milan s.">-->
-<!--        <sqlFile path="ddl/create-secretary-history.sql" relativeToChangelogFile="true"/>-->
-<!--    </changeSet>-->
-<!--    &lt;!&ndash;   &lt;!&ndash; kreiraj tabelu director history&ndash;&gt;&ndash;&gt;-->
-<!--    <changeSet id="create-director-history" author="milan s.">-->
-<!--        <sqlFile path="ddl/create-member-history.sql" relativeToChangelogFile="true"/>-->
-<!--    </changeSet>-->
     <!-- Kreiraj tabelu subject  -->
     <changeSet id="create-subject" author="milan s.">
         <sqlFile path="ddl/create-subject.sql" relativeToChangelogFile="true"/>
@@ -80,22 +56,10 @@
     <changeSet id="init-member" author="milan s.">
         <sqlFile path="dml/init-member.sql" relativeToChangelogFile="true"/>
     </changeSet>
-<!--    <changeSet id="init-director" author="milan s.">-->
-<!--        <sqlFile path="dml/init-director.sql" relativeToChangelogFile="true"/>-->
-<!--    </changeSet>-->
-<!--    <changeSet id="init-secretary" author="milan s.">-->
-<!--        <sqlFile path="dml/init-secretary.sql" relativeToChangelogFile="true"/>-->
-<!--    </changeSet>-->
-<!--    <changeSet id="update-department" author="milan s.">-->
-<!--        <sqlFile path="dml/update-department.sql" relativeToChangelogFile="true"/>-->
-<!--    </changeSet>-->
     <changeSet id="init-academic-title-history" author="milan s.">
         <sqlFile path="dml/init-academic-title-history.sql" relativeToChangelogFile="true"/>
     </changeSet>
     <changeSet id="init-member-history" author="milan s.">
         <sqlFile path="dml/init-member-history.sql" relativeToChangelogFile="true"/>
     </changeSet>
-<!--    <changeSet id="init-secretary-history" author="milan s.">-->
-<!--        <sqlFile path="dml/init-secretary-history.sql" relativeToChangelogFile="true"/>-->
-<!--    </changeSet>-->
 </databaseChangeLog>

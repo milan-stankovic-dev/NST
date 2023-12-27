@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @Data
 public class MemberHistory implements BaseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @Column(name = "start_date")

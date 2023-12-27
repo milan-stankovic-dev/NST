@@ -3,16 +3,16 @@ package nst.springboot.restexample01.domain.impl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import nst.springboot.restexample01.domain.BaseEntity;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "tbl_academic_title_history")
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 public class AcademicTitleHistory implements BaseEntity {
@@ -40,4 +40,16 @@ public class AcademicTitleHistory implements BaseEntity {
     @ManyToOne
     @JoinColumn(name = "scientific_field_id")
     private ScientificField scientificField;
+
+    @Override
+    public String toString() {
+        return "AcademicTitleHistory{" +
+                "id=" + id +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", member=" + (member == null ? null : member.getId()) +
+                ", academicTitle=" + academicTitle +
+                ", scientificField=" + scientificField +
+                '}';
+    }
 }
