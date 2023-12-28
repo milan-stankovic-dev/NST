@@ -6,6 +6,7 @@ import nst.springboot.restexample01.domain.impl.AcademicTitle;
 import nst.springboot.restexample01.dto.AcademicTitleDTO;
 import nst.springboot.restexample01.repository.AcademicTitleRepository;
 import nst.springboot.restexample01.service.abstraction.AcademicTitleService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,11 +25,10 @@ public class AcademicTitleServiceImpl implements AcademicTitleService {
         final AcademicTitle titleSaved = academicTitleRepository.save(titleForSaving);
         return academicTitleConverter.toDto(titleSaved);
     }
-
     @Override
-    public List<AcademicTitleDTO> getAll() {
+    public List<AcademicTitleDTO> getAll(Pageable pageable) {
         return academicTitleConverter.listToDto(
-                academicTitleRepository.findAll()
+                academicTitleRepository.findAll(pageable).getContent()
         );
     }
 

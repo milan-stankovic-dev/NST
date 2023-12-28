@@ -6,6 +6,7 @@ import nst.springboot.restexample01.domain.impl.AcademicTitleHistory;
 import nst.springboot.restexample01.dto.AcademicTitleHistoryDTO;
 import nst.springboot.restexample01.repository.AcademicTitleHistoryRepository;
 import nst.springboot.restexample01.service.abstraction.AcademicTitleHistoryService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,9 +27,9 @@ public class AcademicTitleHistoryServiceImpl implements
     }
 
     @Override
-    public List<AcademicTitleHistoryDTO> getAll() {
+    public List<AcademicTitleHistoryDTO> getAll(Pageable pageable) {
         return academicTitleHistoryConverter.listToDto(
-          academicTitleHistoryRepository.findAll()
+          academicTitleHistoryRepository.findAll(pageable).getContent()
         );
     }
 

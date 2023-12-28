@@ -7,6 +7,7 @@ import nst.springboot.restexample01.domain.impl.EducationTitle;
 import nst.springboot.restexample01.dto.EducationTitleDTO;
 import nst.springboot.restexample01.repository.EducationTitleRepository;
 import nst.springboot.restexample01.service.abstraction.EducationTitleService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,9 +31,9 @@ public class EducationTitleServiceImpl implements EducationTitleService {
     }
 
     @Override
-    public List<EducationTitleDTO> getAll() {
+    public List<EducationTitleDTO> getAll(Pageable pageable) {
         return educationTitleConverter.listToDto(
-                educationTitleRepository.findAll()
+                educationTitleRepository.findAll(pageable).getContent()
         );
     }
 

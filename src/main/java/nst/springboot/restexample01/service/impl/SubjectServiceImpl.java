@@ -12,6 +12,8 @@ import nst.springboot.restexample01.repository.SubjectRepository;
 import nst.springboot.restexample01.service.abstraction.SubjectService;
 import nst.springboot.restexample01.converter.impl.SubjectConverter;
 import nst.springboot.restexample01.dto.SubjectDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -50,9 +52,9 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public List<SubjectDTO> getAll() {
+    public List<SubjectDTO> getAll(Pageable pageable) {
         return subjectConverter.listToDto(
-                subjectRepository.findAll()
+                subjectRepository.findAll(pageable).getContent()
         );
     }
 

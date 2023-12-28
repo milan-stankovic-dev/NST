@@ -5,7 +5,7 @@ create table tbl_academic_title_history (
     academic_title_id bigint unsigned,
     scientific_field_id bigint unsigned,
     member_id bigint unsigned,
-    primary key (id),
+    primary key (id, academic_title_id, scientific_field_id, member_id),
     constraint academic_title_fk FOREIGN KEY
     (academic_title_id) REFERENCES tbl_academic_title(id)
     on update cascade on delete cascade,

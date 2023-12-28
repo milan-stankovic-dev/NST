@@ -6,6 +6,9 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import nst.springboot.restexample01.service.abstraction.SubjectService;
 import nst.springboot.restexample01.dto.SubjectDTO;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,10 +36,20 @@ public class SubjectController {
     }
 
     //vrati sve
-    @GetMapping("/all")
-    public ResponseEntity<List<SubjectDTO>> getAll() {
-        List<SubjectDTO> subjects = subjectService.getAll();
-        return new ResponseEntity<>(subjects, HttpStatus.OK);
+    @GetMapping("/all/paging")
+    public ResponseEntity<List<SubjectDTO>> getAll(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "pageSize", defaultValue = "3") int pageSize,
+            @RequestParam(name = "sortBy", defaultValue = "id") String sortingCriterium,
+            @RequestParam(name = "sortDirection", defaultValue = "asc") String sortingDirection
+    ) {
+        final Pageable pageable =
+                PageRequest.of(page, pageSize,
+                        switch (sortingDirection.toLowerCase()){
+                            case "desc" -> Sort.by(sortingCriterium).descending();
+                            default -> Sort.by(sortingCriterium).ascending();
+                        });
+        return ResponseEntity.ok(subjectService.getAll(pageable));
     }
 
     //pronadji na osnovu ID/a

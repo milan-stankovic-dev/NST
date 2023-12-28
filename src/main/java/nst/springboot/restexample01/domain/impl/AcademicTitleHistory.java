@@ -21,11 +21,11 @@ public class AcademicTitleHistory implements BaseEntity {
     private Long id;
 
     @NotNull
-//    @PastOrPresent
+    @PastOrPresent
     private LocalDate startDate;
 
     @NotNull
-//    @FutureOrPresent
+    @FutureOrPresent
     private LocalDate endDate;
 
     @ManyToOne

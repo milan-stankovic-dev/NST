@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import nst.springboot.restexample01.converter.impl.*;
 import nst.springboot.restexample01.domain.impl.*;
+import nst.springboot.restexample01.dto.DepartmentChangeMemberDTO;
 import nst.springboot.restexample01.dto.MemberDTO;
 import nst.springboot.restexample01.dto.AcademicTitleMemberDTO;
 import nst.springboot.restexample01.dto.RoleChangeMemberDTO;
@@ -11,9 +12,9 @@ import nst.springboot.restexample01.repository.*;
 import nst.springboot.restexample01.role.MemberRole;
 import nst.springboot.restexample01.service.abstraction.MemberService;
 import nst.springboot.restexample01.util.ResolveEntityLinksUtil;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,7 @@ public class MemberServiceImpl implements MemberService {
     private final ResolveEntityLinksUtil resolveEntityLinksUtil;
     private final MemberHistoryRepository memberHistoryRepository;
     private final RoleChangeMemberDTOConverter roleChangeConverter;
+    private final DepartmentChangeMemberDTOConverter departmentChangeMemberConverter;
     @Override
     @Transactional
     public MemberDTO save(MemberDTO memberDTO) throws Exception {
@@ -87,12 +89,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
 
-    @Override
-    public List<MemberDTO> getAll() {
-        return memberConverter.listToDto(
-                memberRepository.findAll()
-        );
-    }
+//    @Override
+//    public List<MemberDTO> getAll() {
+//        return memberConverter.listToDto(
+//                memberRepository.findAll()
+//        );
+//    }
 
     @Override
     public void delete(Long id) throws Exception {
@@ -347,5 +349,78 @@ public class MemberServiceImpl implements MemberService {
         final Member savedMember = memberDbOpt.get();
 
         return memberConverter.toDto(savedMember);
+    }
+
+    @Override
+    public List<MemberDTO> getAllOfType(String type) throws Exception {
+        if(type == null || type.isEmpty()){
+            throw new Exception("You must input a query type for searching members.");
+        }
+
+        if(!type.equalsIgnoreCase("REGULAR")
+                && !type.equalsIgnoreCase("DIRECTOR")
+                && !type.equalsIgnoreCase("SECRETARY")){
+            throw new Exception("Illegal type of member inputted. Valid types are: " +
+                    "'REGULAR', 'SECRETARY' and 'DIRECTOR'");
+        }
+
+        return memberConverter.listToDto(
+            memberRepository.findAllByType(MemberRole.valueOf(type.toUpperCase()))
+        );
+    }
+
+    @Override
+    public List<MemberDTO> getAll(Pageable pageable) {
+        return memberConverter.listToDto(
+            memberRepository.findAll(pageable).getContent()
+        );
+    }
+
+    @Override
+    public DepartmentChangeMemberDTO updateDepartment(DepartmentChangeMemberDTO memberDTO)
+                                                                        throws Exception{
+        if(memberDTO.id() == null || memberDTO.newDepartmentId() == null){
+            throw new Exception("DTO input invalid. Try again.");
+        }
+
+        final Long memberId = memberDTO.id();
+        final Long newDepartmentId = memberDTO.newDepartmentId();
+
+        final Optional<Member> memberOptDb =
+                memberRepository.findById(memberId);
+
+        if(memberOptDb.isEmpty()){
+            throw new Exception("There is no member with given id.");
+        }
+
+        final var memberToChange = memberOptDb.get();
+
+        if(memberToChange.getRole() == MemberRole.DIRECTOR ||
+            memberToChange.getRole() == MemberRole.SECRETARY){
+            throw new Exception("You may not change the department of a " +
+                    "sitting director or a secretary. This feature is only " +
+                    "available for regular members.");
+        }
+
+        final Optional<Department> departmentOptDb =
+                departmentRepository.findById(newDepartmentId);
+
+        if(departmentOptDb.isEmpty()){
+            throw new Exception("There is no department with said id.");
+        }
+
+        final var newDepartment = departmentOptDb.get();
+
+        if(memberToChange.getDepartment() != null
+                && (memberToChange.getDepartment().getId().longValue()
+                == newDepartmentId.longValue())){
+            throw new Exception("There is no need for a department change." +
+                    " This member is already assigned to that department.");
+        }
+
+        memberToChange.setDepartment(newDepartment);
+        final Member memberSaved = memberRepository.save(memberToChange);
+        return departmentChangeMemberConverter.toDto(memberSaved);
+
     }
 }

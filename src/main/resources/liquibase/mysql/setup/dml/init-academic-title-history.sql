@@ -14,4 +14,4 @@ VALUES ("2020-11-20",
         "2021-11-20",
         (select id from tbl_academic_title where name = "Lecturer"),
         (select id from tbl_scientific_field where field_name = "Digital marketing"),
-        (select id from tbl_member where first_name = "Sima" and last_name = "Simic"));
+        (select id from tbl_member where first_name = "Pera" and last_name = "Sipka"));

@@ -6,6 +6,7 @@ import nst.springboot.restexample01.domain.impl.ScientificField;
 import nst.springboot.restexample01.dto.ScientificFieldDTO;
 import nst.springboot.restexample01.repository.ScientificFieldRepository;
 import nst.springboot.restexample01.service.abstraction.ScientificFieldService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,9 +27,9 @@ public class ScientificFieldServiceImpl implements ScientificFieldService {
     }
 
     @Override
-    public List<ScientificFieldDTO> getAll() {
+    public List<ScientificFieldDTO> getAll(Pageable pageable) {
         return scientificFieldConverter.listToDto(
-            scientificFieldRepository.findAll()
+            scientificFieldRepository.findAll(pageable).getContent()
         );
     }
 

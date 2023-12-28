@@ -5,6 +5,7 @@ import nst.springboot.restexample01.converter.impl.MemberHistoryConverter;
 import nst.springboot.restexample01.dto.MemberHistoryDTO;
 import nst.springboot.restexample01.repository.MemberHistoryRepository;
 import nst.springboot.restexample01.service.abstraction.MemberHistoryService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,13 +13,14 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class MemberHistoryServiceImpl implements MemberHistoryService {
-    private MemberHistoryRepository memberHistoryRepository;
-    private MemberHistoryConverter memberHistoryConverter;
+    private final MemberHistoryRepository memberHistoryRepository;
+    private final MemberHistoryConverter memberHistoryConverter;
+
 
     @Override
-    public List<MemberHistoryDTO> getAll() {
+    public List<MemberHistoryDTO> getAll(Pageable pageable) {
         return memberHistoryConverter.listToDto(
-                memberHistoryRepository.findAll()
+                memberHistoryRepository.findAll(pageable).getContent()
         );
     }
 

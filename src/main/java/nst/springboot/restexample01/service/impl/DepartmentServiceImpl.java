@@ -11,6 +11,7 @@ import nst.springboot.restexample01.service.abstraction.DepartmentService;
 import nst.springboot.restexample01.converter.impl.DepartmentConverter;
 import nst.springboot.restexample01.dto.DepartmentDTO;
 import nst.springboot.restexample01.exception.DepartmentAlreadyExistException;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -66,11 +67,10 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public List<DepartmentDTO> getAll() {
-        return departmentRepository
-                .findAll()
-                .stream().map(entity -> departmentConverter.toDto(entity))
-                .collect(Collectors.toList());
+    public List<DepartmentDTO> getAll(Pageable pageable) {
+        return departmentConverter.listToDto(
+            departmentRepository.findAll(pageable).getContent()
+        );
     }
 
 }

@@ -9,6 +9,9 @@ import nst.springboot.restexample01.service.abstraction.DepartmentService;
 import nst.springboot.restexample01.dto.DepartmentDTO;
 import nst.springboot.restexample01.exception.DepartmentAlreadyExistException;
 import nst.springboot.restexample01.exception.MyErrorDetails;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,10 +40,21 @@ public class DepartmentController {
     }
 
    
-    @GetMapping("/all")
-    public ResponseEntity<List<DepartmentDTO>> getAll() {
-        List<DepartmentDTO> departments = departmentService.getAll();
-        return new ResponseEntity<>(departments, HttpStatus.OK);
+    @GetMapping("/all/pageable")
+    public ResponseEntity<List<DepartmentDTO>> getAll(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "pageSize", defaultValue = "3") int pageSize,
+            @RequestParam(name = "sortBy", defaultValue = "id") String sortingCriterium,
+            @RequestParam(name = "sortDirection", defaultValue = "asc") String sortingDirection
+    ) {
+        final Pageable pageable =
+                PageRequest.of(page, pageSize,
+                        switch (sortingDirection.toLowerCase()){
+                            case "desc" -> Sort.by(sortingCriterium).descending();
+                            default -> Sort.by(sortingCriterium).ascending();
+                        });
+
+        return ResponseEntity.ok(departmentService.getAll(pageable));
     }
 
        //pronadji na osnovu ID/a

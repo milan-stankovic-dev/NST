@@ -4,6 +4,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import nst.springboot.restexample01.dto.EducationTitleDTO;
 import nst.springboot.restexample01.service.abstraction.EducationTitleService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,8 +32,19 @@ public class EducationTitleController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<EducationTitleDTO>> getAll(){
-        return ResponseEntity.ok(educationTitleService.getAll());
+    @GetMapping("/all/pageable")
+    public ResponseEntity<List<EducationTitleDTO>> getAll(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "pageSize", defaultValue = "3") int pageSize,
+            @RequestParam(name = "sortBy", defaultValue = "id") String sortingCriterium,
+            @RequestParam(name = "sortDirection", defaultValue = "asc") String sortingDirection
+    ){
+        final Pageable pageable =
+                PageRequest.of(page, pageSize,
+                        switch (sortingDirection.toLowerCase()){
+                            case "desc" -> Sort.by(sortingCriterium).descending();
+                            default -> Sort.by(sortingDirection).ascending();
+                });
+        return ResponseEntity.ok(educationTitleService.getAll(pageable));
     }
 }
