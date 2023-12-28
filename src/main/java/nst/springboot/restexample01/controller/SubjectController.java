@@ -70,7 +70,7 @@ public class SubjectController {
     
     //obrisi
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) throws Exception {
+    public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception {
         /*
         try {
             departmentService.delete(id);
@@ -80,7 +80,7 @@ public class SubjectController {
         }*/
         
         subjectService.delete(id);
-        return new ResponseEntity<>("Department removed!", HttpStatus.OK);
+        return ResponseEntity.noContent().build();
 
     }
 }

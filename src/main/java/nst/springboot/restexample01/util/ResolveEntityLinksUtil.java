@@ -1,5 +1,6 @@
 package nst.springboot.restexample01.util;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Null;
 import lombok.Getter;
 import nst.springboot.restexample01.domain.BaseEntity;
@@ -8,10 +9,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class ResolveEntityLinksUtil {
 
+    @Transactional
     public <T extends BaseEntity> T saveIfNotNull(
             T entity, JpaRepository<T, Long> repository) {
 
@@ -20,14 +23,16 @@ public class ResolveEntityLinksUtil {
                     " that is preventing" +
                     " the saving process");
         }
+        final Optional<T> entityDbOpt = repository.findById(entity.getId());
 
-        if (entity.getId() == null || !repository.existsById(entity.getId())) {
+        if (entity.getId() == null || entityDbOpt.isEmpty()) {
             return repository.save(entity);
         }
 
-        return entity;
+        return entityDbOpt.get();
     }
 
+    @Transactional
     public <T extends BaseEntity> List<T> saveListIfNotNull(
             List<T> entities,
             JpaRepository<T, Long> repository) {

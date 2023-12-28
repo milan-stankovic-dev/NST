@@ -81,20 +81,14 @@ public class MemberServiceImpl implements MemberService {
 
         histories.stream().forEach(h -> h.getMember().setId(savedMember.getId()));
 
-        resolveEntityLinksUtil.saveListIfNotNull(
+        final var savedHistories = resolveEntityLinksUtil.saveListIfNotNull(
                         histories,
                         academicTitleHistoryRepository);
 
+        savedMember.setHistories(savedHistories);
         return memberConverter.toDto(savedMember);
     }
 
-
-//    @Override
-//    public List<MemberDTO> getAll() {
-//        return memberConverter.listToDto(
-//                memberRepository.findAll()
-//        );
-//    }
 
     @Override
     public void delete(Long id) throws Exception {
@@ -120,6 +114,7 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.deleteById(id);
     }
 
+    @Transactional
     private void validateUpdateAcademicTitleInput(AcademicTitleMemberDTO member)
                     throws Exception{
         final Long id = member.id();
@@ -157,7 +152,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public AcademicTitleMemberDTO updateAcademicTitle(AcademicTitleMemberDTO member) throws Exception {
 
-        validateUpdateAcademicTitleInput(member);
+        this.validateUpdateAcademicTitleInput(member);
 
         final Optional<Member> memberOptDb = memberRepository
                 .findById(member.id());
@@ -202,6 +197,7 @@ public class MemberServiceImpl implements MemberService {
 
         return academicTitleMemberDTOConverter.toDto(savedMember);
     }
+    @Transactional
     private Member fetchMemberIfInputValid (RoleChangeMemberDTO memberDTO) throws Exception{
         if(memberDTO.id() == null){
             throw new Exception("You must input an id for member role change.");
@@ -213,9 +209,9 @@ public class MemberServiceImpl implements MemberService {
                     "secretary are chosen. To downgrade this member, please provide a new replacement.");
         }
 
-        return getMember(memberDTO);
+        return this.getMember(memberDTO);
     }
-
+    @Transactional
     private Department fetchDepartmentIfInputValid(Member memberDb) throws Exception {
         final Optional<Department> departmentForRoleChange =
                 departmentRepository.findById(memberDb.getDepartment().getId());
@@ -227,7 +223,7 @@ public class MemberServiceImpl implements MemberService {
 
         return departmentForRoleChange.get();
     }
-
+    @Transactional
     private Member fetchCurrentRoleHolderIfUnique(MemberRole role, Long departmentId)
                                                                     throws Exception{
         final List<Member> currentRoleHolderList =
@@ -249,7 +245,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public RoleChangeMemberDTO updateRole(RoleChangeMemberDTO memberDTO) throws Exception {
 
-        final var memberDb = fetchMemberIfInputValid(memberDTO);
+        final var memberDb = this.fetchMemberIfInputValid(memberDTO);
 
         if (memberDb.getDepartment().getId() == null) {
             throw new Exception("This member may not be assigned to any " +
@@ -260,10 +256,10 @@ public class MemberServiceImpl implements MemberService {
         final var departmentDb = fetchDepartmentIfInputValid(memberDb);
 
         final Member currentRoleHolder =
-                fetchCurrentRoleHolderIfUnique(memberDTO.newRole()
+                this.fetchCurrentRoleHolderIfUnique(memberDTO.newRole()
                         ,departmentDb.getId());
 
-        retireCurrentChairman(currentRoleHolder);
+        this.retireCurrentChairman(currentRoleHolder);
 
         switch (memberDb.getRole()){
             case REGULAR:
@@ -275,7 +271,7 @@ public class MemberServiceImpl implements MemberService {
                 final var oppositeRole = getOppositeChairmanRole(
                         memberDb.getRole());
                 final var oppositeRoleHolder =
-                        fetchCurrentRoleHolderIfUnique(
+                        this.fetchCurrentRoleHolderIfUnique(
                                 oppositeRole,
                                 departmentDb.getId());
 
@@ -291,7 +287,7 @@ public class MemberServiceImpl implements MemberService {
         return roleChangeConverter.toDto(newRoleHolder);
 
     }
-
+    @Transactional
     private void retireCurrentChairman(Member currentRoleHolder){
         final LocalDate startDate = currentRoleHolder.getStartDate();
         final LocalDate endDate = LocalDate.now();
@@ -307,6 +303,7 @@ public class MemberServiceImpl implements MemberService {
         memberHistoryRepository.save(historyToSave);
     }
 
+    @Transactional
     private Member getMember(RoleChangeMemberDTO memberDTO) throws Exception {
 
         final Optional<Member> memberOptDb =

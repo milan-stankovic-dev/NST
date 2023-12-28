@@ -2,6 +2,7 @@ package nst.springboot.restexample01.domain.impl;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,6 +41,7 @@ public class Member implements BaseEntity {
     private MemberRole role;
 
     @Column(name = "start_date")
+    @PastOrPresent
     private LocalDate startDate;
 
     @ManyToOne

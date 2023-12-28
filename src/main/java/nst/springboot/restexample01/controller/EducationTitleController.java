@@ -43,7 +43,7 @@ public class EducationTitleController {
                 PageRequest.of(page, pageSize,
                         switch (sortingDirection.toLowerCase()){
                             case "desc" -> Sort.by(sortingCriterium).descending();
-                            default -> Sort.by(sortingDirection).ascending();
+                            default -> Sort.by(sortingCriterium).ascending();
                 });
         return ResponseEntity.ok(educationTitleService.getAll(pageable));
     }

@@ -43,7 +43,7 @@ public class MemberController {
                             case "desc" -> Sort.by(sortingCriterium).descending();
                             default -> Sort.by(sortingCriterium).ascending();
                         });
-
+        System.out.println(pageable);
         return ResponseEntity.ok(memberService.getAll(pageable));
     }
 

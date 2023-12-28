@@ -31,7 +31,6 @@ public class DepartmentController {
 
     private final DepartmentService departmentService;
 
-    //dodaj novi department
     @PostMapping("/save")
     public ResponseEntity<DepartmentDTO> save(@Valid @RequestBody DepartmentDTO departmentDto) throws Exception {
         //ResponseEntity
@@ -57,50 +56,26 @@ public class DepartmentController {
         return ResponseEntity.ok(departmentService.getAll(pageable));
     }
 
-       //pronadji na osnovu ID/a
-    //localhost:8080/department/1
     @GetMapping("/{id}")
     public DepartmentDTO findById(@PathVariable("id") Long id) throws Exception {
         System.out.println("Controller: " + id);
         return departmentService.findById(id);
     }
 
-    //pronadji na osnovu ID/a
-    //localhost:8080/department/query?id=1
     @GetMapping("/query")
-    public Department queryById(@RequestParam("id") Long id) throws Exception {
+    public ResponseEntity<DepartmentDTO> queryById(@RequestParam("id") Long id) throws Exception {
         //return departmentService.findById(id);
-        throw new Exception("Nije implementirana.");
+        return ResponseEntity.ok(departmentService.findById(id));
     }
 
-    //azuriraj
-    //obrisi
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) throws Exception {
-        /*
-        try {
-            departmentService.delete(id);
-            return new ResponseEntity<>("Department removed!", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(">>" + e.getMessage(), HttpStatus.NOT_FOUND);
-        }*/
+    public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception {
 
         departmentService.delete(id);
-        return new ResponseEntity<>("Department removed!", HttpStatus.OK);
+        return ResponseEntity.noContent().build();
 
     }
 
-    /*
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<MyErrorDetails> handleException(Exception e){
-        System.out.println("nst.springboot.restexample01.controller.DepartmentController.handleException()");
-        System.out.println("-----------pozvana metoda za obradu izuzetka u kontroleru -------------");
-        
-        MyErrorDetails myErrorDetails = new MyErrorDetails(e.getMessage());
-        
-        return new ResponseEntity<>(myErrorDetails, HttpStatus.NOT_FOUND);
-
-    }*/
     @ExceptionHandler(DepartmentAlreadyExistException.class)
     public ResponseEntity<MyErrorDetails> handleException(DepartmentAlreadyExistException e) {
         System.out.println("nst.springboot.restexample01.controller.DepartmentController.handleException()");
