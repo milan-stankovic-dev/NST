@@ -11,6 +11,7 @@ import nst.springboot.restexample01.dto.RoleChangeMemberDTO;
 import nst.springboot.restexample01.repository.*;
 import nst.springboot.restexample01.role.MemberRole;
 import nst.springboot.restexample01.service.abstraction.MemberService;
+import nst.springboot.restexample01.util.MemberRoleValidator;
 import nst.springboot.restexample01.util.ResolveEntityLinksUtil;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberHistoryRepository memberHistoryRepository;
     private final RoleChangeMemberDTOConverter roleChangeConverter;
     private final DepartmentChangeMemberDTOConverter departmentChangeMemberConverter;
+    private final MemberRoleValidator memberRoleValidator;
     @Override
     @Transactional
     public MemberDTO save(MemberDTO memberDTO) throws Exception {
@@ -350,16 +352,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public List<MemberDTO> getAllOfType(String type) throws Exception {
-        if(type == null || type.isEmpty()){
-            throw new Exception("You must input a query type for searching members.");
-        }
-
-        if(!type.equalsIgnoreCase("REGULAR")
-                && !type.equalsIgnoreCase("DIRECTOR")
-                && !type.equalsIgnoreCase("SECRETARY")){
-            throw new Exception("Illegal type of member inputted. Valid types are: " +
-                    "'REGULAR', 'SECRETARY' and 'DIRECTOR'");
-        }
+        memberRoleValidator.validateRole(type);
 
         return memberConverter.listToDto(
             memberRepository.findAllByType(MemberRole.valueOf(type.toUpperCase()))

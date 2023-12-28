@@ -38,4 +38,11 @@ public class MemberHistoryController {
         return ResponseEntity.ok(memberHistoryService.getAll(pageable));
     }
 
+    @GetMapping("/queryByType")
+    public ResponseEntity<List<MemberHistoryDTO>> findByType(
+            @RequestParam String memberRole) throws Exception {
+
+        return ResponseEntity.ok(memberHistoryService.getAll(memberRole));
+    }
+
 }

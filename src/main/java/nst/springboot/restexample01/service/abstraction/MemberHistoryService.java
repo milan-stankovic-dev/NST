@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface MemberHistoryService{
     List<MemberHistoryDTO> getAll(Pageable pageable);
+
+    List<MemberHistoryDTO> getAll(String memberRole) throws Exception;
 }
