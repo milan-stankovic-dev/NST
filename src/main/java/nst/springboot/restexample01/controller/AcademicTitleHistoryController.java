@@ -6,6 +6,7 @@ import nst.springboot.restexample01.dto.AcademicTitleDTO;
 import nst.springboot.restexample01.dto.AcademicTitleHistoryDTO;
 import nst.springboot.restexample01.service.abstraction.AcademicTitleHistoryService;
 import nst.springboot.restexample01.service.abstraction.AcademicTitleService;
+import nst.springboot.restexample01.util.PaginationUtil;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -22,6 +23,8 @@ import java.util.List;
 @RequestMapping("/academic-title-history")
 public class AcademicTitleHistoryController {
     private final AcademicTitleHistoryService academicTitleHistoryService;
+    private final PaginationUtil paginationUtil;
+
     @GetMapping("/all/pageable")
     public ResponseEntity<List<AcademicTitleHistoryDTO>> getAll(
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -30,11 +33,9 @@ public class AcademicTitleHistoryController {
             @RequestParam(name = "sortDirection", defaultValue = "asc") String sortDirection
     ){
         final Pageable pageable =
-                PageRequest.of(page, pageSize,
-                        switch (sortingCriterium.toLowerCase()) {
-                            case "desc" -> Sort.by(sortingCriterium).descending();
-                            default -> Sort.by(sortingCriterium).ascending();
-                        });
+                paginationUtil.createPageable(page, pageSize,
+                        sortingCriterium, sortDirection);
+
         return ResponseEntity.ok(academicTitleHistoryService
                 .getAll(pageable));
     }

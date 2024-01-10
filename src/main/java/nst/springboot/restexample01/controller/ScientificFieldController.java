@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import nst.springboot.restexample01.dto.ScientificFieldDTO;
 import nst.springboot.restexample01.service.abstraction.ScientificFieldService;
+import nst.springboot.restexample01.util.PaginationUtil;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequestMapping("/scientific-field")
 public class ScientificFieldController {
     private final ScientificFieldService scientificFieldService;
+    private final PaginationUtil paginationUtil;
 
     @GetMapping("/all/pageable")
     public ResponseEntity<List<ScientificFieldDTO>> findAll(
@@ -26,11 +28,9 @@ public class ScientificFieldController {
             @RequestParam(name = "sortDirection", defaultValue = "asc") String sortingDirection
     ){
         final Pageable pageable =
-                PageRequest.of(page, pageSize,
-                        switch (sortingDirection.toLowerCase()) {
-                            case "desc" -> Sort.by(sortingCriterium).descending();
-                            default -> Sort.by(sortingCriterium).ascending();
-                        });
+                paginationUtil.createPageable(page, pageSize,
+                        sortingCriterium, sortingDirection);
+
         return ResponseEntity.ok(scientificFieldService.getAll(pageable));
     }
 

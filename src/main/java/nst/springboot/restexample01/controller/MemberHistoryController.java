@@ -3,6 +3,7 @@ package nst.springboot.restexample01.controller;
 import lombok.RequiredArgsConstructor;
 import nst.springboot.restexample01.dto.MemberHistoryDTO;
 import nst.springboot.restexample01.service.abstraction.MemberHistoryService;
+import nst.springboot.restexample01.util.PaginationUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,7 @@ import java.util.List;
 @RequestMapping("/member-history")
 public class MemberHistoryController {
     private final MemberHistoryService memberHistoryService;
+    private final PaginationUtil paginationUtil;
 
     @GetMapping("/all/paging")
     public ResponseEntity<List<MemberHistoryDTO>> findAllPaging(
@@ -29,11 +31,8 @@ public class MemberHistoryController {
             @RequestParam(name = "sortDirection", defaultValue = "asc") String sortDirection){
 
         final Pageable pageable =
-                PageRequest.of(page, pageSize,
-                        switch (sortDirection) {
-                            case "desc" -> Sort.by(sortingCriterium).descending();
-                            default -> Sort.by(sortingCriterium).ascending();
-                        });
+                paginationUtil.createPageable(page, pageSize,
+                        sortingCriterium, sortDirection);
 
         return ResponseEntity.ok(memberHistoryService.getAll(pageable));
     }

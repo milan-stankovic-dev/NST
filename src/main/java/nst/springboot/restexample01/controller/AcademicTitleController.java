@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import nst.springboot.restexample01.dto.AcademicTitleDTO;
 import nst.springboot.restexample01.service.abstraction.AcademicTitleService;
+import nst.springboot.restexample01.util.PaginationUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,7 @@ import java.util.List;
 @RequestMapping("/academic-title")
 public class AcademicTitleController {
     private final AcademicTitleService academicTitleService;
+    private final PaginationUtil paginationUtil;
 
     @PostMapping("/save")
     public ResponseEntity<AcademicTitleDTO> save(@Valid @RequestBody
@@ -41,11 +43,8 @@ public class AcademicTitleController {
             @RequestParam(name = "sortDirection", defaultValue = "asc") String sortDirection
     ){
         final Pageable pageable =
-                PageRequest.of(page, pageSize,
-                        switch (sortDirection.toLowerCase()) {
-                            case "desc" -> Sort.by(sortingCriterium).descending();
-                            default -> Sort.by(sortingCriterium).ascending();
-                        });
+                paginationUtil.createPageable(page, pageSize,
+                        sortingCriterium, sortDirection);
 
         return ResponseEntity.ok(academicTitleService.getAll(pageable));
     }

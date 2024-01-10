@@ -9,6 +9,7 @@ import nst.springboot.restexample01.service.abstraction.DepartmentService;
 import nst.springboot.restexample01.dto.DepartmentDTO;
 import nst.springboot.restexample01.exception.DepartmentAlreadyExistException;
 import nst.springboot.restexample01.exception.MyErrorDetails;
+import nst.springboot.restexample01.util.PaginationUtil;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DepartmentController {
 
     private final DepartmentService departmentService;
+    private final PaginationUtil paginationUtil;
 
     @PostMapping("/save")
     public ResponseEntity<DepartmentDTO> save(@Valid @RequestBody DepartmentDTO departmentDto) throws Exception {
@@ -47,11 +49,8 @@ public class DepartmentController {
             @RequestParam(name = "sortDirection", defaultValue = "asc") String sortingDirection
     ) {
         final Pageable pageable =
-                PageRequest.of(page, pageSize,
-                        switch (sortingDirection.toLowerCase()){
-                            case "desc" -> Sort.by(sortingCriterium).descending();
-                            default -> Sort.by(sortingCriterium).ascending();
-                        });
+                paginationUtil.createPageable(page, pageSize,
+                        sortingCriterium, sortingDirection);
 
         return ResponseEntity.ok(departmentService.getAll(pageable));
     }

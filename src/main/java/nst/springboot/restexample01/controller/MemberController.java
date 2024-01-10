@@ -8,6 +8,7 @@ import nst.springboot.restexample01.dto.AcademicTitleMemberDTO;
 import nst.springboot.restexample01.dto.RoleChangeMemberDTO;
 import nst.springboot.restexample01.role.MemberRole;
 import nst.springboot.restexample01.service.abstraction.MemberService;
+import nst.springboot.restexample01.util.PaginationUtil;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -21,6 +22,7 @@ import java.util.List;
 @RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
+    private final PaginationUtil paginationUtil;
 
     @GetMapping("/paging")
     public ResponseEntity<List<MemberDTO>> getAllPaging(
@@ -38,12 +40,9 @@ public class MemberController {
 //                    Sort.by(sortDirection).descending());
 //        }
         final Pageable pageable =
-                PageRequest.of(page, pageSize ,
-                        switch (sortDirection.toLowerCase()) {
-                            case "desc" -> Sort.by(sortingCriterium).descending();
-                            default -> Sort.by(sortingCriterium).ascending();
-                        });
-        System.out.println(pageable);
+                paginationUtil.createPageable(page, pageSize,
+                        sortingCriterium, sortDirection);
+
         return ResponseEntity.ok(memberService.getAll(pageable));
     }
 
